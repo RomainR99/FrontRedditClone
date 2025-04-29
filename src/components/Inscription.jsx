@@ -23,27 +23,24 @@ function Inscription() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-content bg-gray-100">
-            <form onSubmit={handleInscription} className="bg-white p-8 rounded-lg shadow-md w-96">
-                <h2 className="text-2xl font-bold mb-6 text-center text-black">Créer un compte</h2>
+        <div className="app">
+            <form onSubmit={handleInscription} className="form">
+                <h2>Créer un compte</h2>
                 <input 
                     type="email"
-                    placeholder="Email"
-                    className="w-full p-2 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-400"
+                    placeholder="Email"                   
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
                 <input 
                     type="text"
                     placeholder="Nom d'utilisateur"
-                    className="w-full p-2 mb-4 border border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-400"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                 />
                 <input 
                     type="password"
-                    placeholder="Mot de passe"
-                    className="w-full p-2 mb-6 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-400"
+                    placeholder="Mot de passe"                  
                     value={password} 
                     onChange={(e) => setPassword(e.target.value)}
                 />

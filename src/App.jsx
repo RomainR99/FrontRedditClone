@@ -1,11 +1,16 @@
 import React from 'react';
 import Main from './components/Main';
+import "./index.css";
 
 
 
 function App() {
   return (
-    <Main/>
+    <>
+      <h1 className="text-4xl text-red-500 font-bold">Test Tailwind</h1>
+      <Main/>
+    </>
+    
   )
 }
 //function App() {
