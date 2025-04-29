@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import "../index.css";
 
 function Inscription() {
     const [email, setEmail] = useState('')
@@ -54,3 +55,5 @@ function Inscription() {
         </div>
     )
 }
+
+export default Inscription
