@@ -1,8 +1,12 @@
+/* Inscription*/
 body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  background-color: #f6f7f8;
+  background-color: #f0f2f5;
+}
+
+.page{
   height: 100vh;
   display: flex;
   align-items: center;
@@ -40,7 +44,7 @@ input {
 
 button {
   padding: 10px;
-  background-color: #FF4500;
+  background-color: #1877f2;
   color: white;
   border: none;
   border-radius: 5px;
@@ -50,5 +54,8 @@ button {
 }
 
 button:hover {
-  background-color: #e03d00;
+  background-color: #166fe5;
 }
+
+
+

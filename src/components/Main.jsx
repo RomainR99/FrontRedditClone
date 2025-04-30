@@ -1,16 +1,11 @@
-import Connexion from "./Connexion";
-import Inscription from "./Inscription";
+import MainPage from "./MainPage.jsx";
+
+
 
 function Main() {
     return (
         <>
-            <Inscription/>
-
-            <br />
-
-            <br />
-
-            <Connexion/>
+            <MainPage/>
         </>
     )
 }

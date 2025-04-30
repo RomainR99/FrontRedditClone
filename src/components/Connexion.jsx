@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import "../index.css";
+import "../Connexion.css";
 
 function Connexion() {
     const [email, setEmail] = useState('')
@@ -22,29 +22,27 @@ function Connexion() {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100">
-            <form onSubmit={handleConnexion} className="bg-white p-8 rounded-lg shadow-md w-96">
-                <h2 className="text-2xl font-bold mb-6 text-center">Se connecter</h2>
+        <div className="connexion-page">
+            <form onSubmit={handleConnexion} className="connexion-form">
+                <h2 >Se connecter</h2>
                 {error && (
-                    <div className="bg-red-100 text-red-700 p-2 mb-4 rounded">
+                    <div className="error-message">
                         {error}
                     </div>
                 )}
                 <input 
                     type="email"
                     placeholder="Email"
-                    className="w-full p-2 mb-4 border rounded"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)} 
                 />
                 <input 
                     type="password"
                     placeholder="Mot de passe"
-                    className="w-full p-2 mb-6 border rounded"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)} 
                 />
-                <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition duration-200">
+                <button type="submit">
                     Se connecter
                 </button>
             </form>
