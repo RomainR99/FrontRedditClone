@@ -1,9 +1,8 @@
-.main-container {
-    background-color: #f0f2f5;
-    min-height: 100vh;
-}
-
-.content {
+.main-layout {
     display: flex;
     padding: 20px;
-}
+    gap: 20px;
+    background-color: #0f0f0f;
+    min-height: 100vh;
+    color: #e4e4e4;
+  }

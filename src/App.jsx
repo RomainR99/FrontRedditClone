@@ -1,6 +1,7 @@
 import React from 'react';
 import Main from './components/Main';
 import "./index.css";
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 
 
