@@ -11,7 +11,9 @@ function MainPage() {
             <Navbar/>
             <div className="main-layout">
                 <Sidebard/>
+                <div className="center-layout">
                 <PostList/>
+                </div>
                 <Suggestion/>
             </div>
         </>
