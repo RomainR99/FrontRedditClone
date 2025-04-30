@@ -3,6 +3,7 @@ import Sidebard from "./Sidebar.jsx";
 import PostList from "./PostList.jsx";
 import "../Mainpage.css"
 import Suggestion from "./Suggestion.jsx";
+import Footer from "./Footer.jsx";
 
 
 function MainPage() {
@@ -16,6 +17,7 @@ function MainPage() {
                 </div>
                 <Suggestion/>
             </div>
+            <Footer/>
         </>
     )
 }
