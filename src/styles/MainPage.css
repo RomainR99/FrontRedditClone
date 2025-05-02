@@ -1,0 +1,14 @@
+.main-layout {
+    display: flex;
+    padding: 20px 40px;
+    gap: 30px;
+    background-color: #0f0f0f;
+    min-height: 100vh;
+    color: #e4e4e4;
+}
+
+.center-layout {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}

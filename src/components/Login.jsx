@@ -1,5 +1,7 @@
 // src/components/Login.jsx
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // ← Import du hook de navigation
+import '../styles/Login.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -38,7 +40,8 @@ const Login = () => {
       const token = data.jwt;
 
       localStorage.setItem('jwt', token);
-      window.location.href = '/posts';
+      /*window.location.href = '/posts';*/
+      window.location.href = '/main';
     } catch (err) {
       setError(err.message);
     } finally {
@@ -47,9 +50,9 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="connexion-page">
       <h2>Connexion</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="connexion-form">
         <div>
           <label>Email:</label>
           <input

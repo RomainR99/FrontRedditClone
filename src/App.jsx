@@ -5,6 +5,7 @@ import SignUp from './components/SignUp';
 import Login from './components/Login';
 import Posts from './components/Posts';
 import FirstLogin from './components/FirstLogin'; // Importer FirstLogin
+import Main from './components/Main';
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/posts" element={<Posts />} />
-        <Route path="/first-login" element={<FirstLogin />} /> {/* Ajouter la route pour FirstLogin */}
+        <Route path="/first-login" element={<FirstLogin />} /> 
+        <Route path="/main" element={<Main />} />
       </Routes>
     </Router>
   );

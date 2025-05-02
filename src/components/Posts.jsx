@@ -1,5 +1,6 @@
 // src/components/Posts.jsx
 import React, { useState, useEffect } from 'react';
+import "../styles/PostCard.css";
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
@@ -47,14 +48,16 @@ const Posts = () => {
   if (error) return <p className="text-red-500">Erreur : {error}</p>;
 
   return (
+    
     <div className="space-y-4">
       {posts.map((post) => (
         <div key={post.id} className="p-4 border border-gray-200 rounded shadow-sm">
           <h2 className="text-xl font-semibold text-gray-800">{post.title}</h2>
-          <p className="text-gray-600">{post.description}</p>
+          <p className="text-gray-700 mt-2">{post.description}</p>
         </div>
       ))}
     </div>
+    
   );
 };
 
