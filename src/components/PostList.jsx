@@ -1,5 +1,5 @@
 import PostCard from "./PostCard.jsx";
-import "../styles/PostList.css";
+import "../styles/PostCard.css";
 
 
 function PostList() {

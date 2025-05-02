@@ -1,6 +1,6 @@
 // src/components/Posts.jsx
 import React, { useState, useEffect } from 'react';
-import "../styles/PostCard.css";
+import "../styles/Post.css";
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
@@ -20,13 +20,14 @@ const Posts = () => {
       }
 
       try {
-        const response = await fetch('http://localhost:1337/api/articles', {
+        const response = await fetch('http://localhost:1337/api/articles?populate=cover', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
         });
+
 
         if (!response.ok) {
           throw new Error(`Erreur HTTP : ${response.status}`);
@@ -48,17 +49,32 @@ const Posts = () => {
   if (error) return <p className="text-red-500">Erreur : {error}</p>;
 
   return (
-    
-    <div className="space-y-4">
-      {posts.map((post) => (
-        <div key={post.id} className="p-4 border border-gray-200 rounded shadow-sm">
-          <h2 className="text-xl font-semibold text-gray-800">{post.title}</h2>
-          <p className="text-gray-700 mt-2">{post.description}</p>
-        </div>
-      ))}
+    <div className="post space-y-6 px-4 py-6">
+      <div className="post-header">
+        {posts.length > 0 ? (
+          posts.map((post) => {
+            return (
+              <div key={post.id} className="p-4 border border-gray-200 rounded shadow-md bg-white">
+                <h2 className="text-xl font-semibold text-gray-800 mb-2">{post.title}</h2>
+                <p className="text-gray-700 mb-4">{post.description}</p>
+  
+                {post.cover && (
+                  <img
+                    src={`http://localhost:1337${post.cover.formats?.thumbnail?.url || post.cover.url}`}
+                    alt="cover"
+                    className="w-full h-auto rounded"
+                  />
+                )}
+              </div>
+            );
+          })
+        ) : (
+          <p className="text-center text-gray-500">Aucun article disponible</p>
+        )}
+      </div>
     </div>
-    
   );
+  
 };
 
 export default Posts;
