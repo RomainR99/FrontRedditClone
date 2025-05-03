@@ -1,13 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Navbar from "./Navbar.jsx";
+import Sidebar from "./Sidebar.jsx";
+import Footer from "./Footer.jsx";
+import "../styles/MainPage.css";
 
-const CreatePost = () => {
+function CreatePost() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [cover, setCover] = useState(null);
+  const [preview, setPreview] = useState(null);
   const [error, setError] = useState(null);
-
   const navigate = useNavigate();
+
+  // Nettoyage de l'aperçu d'image
+  useEffect(() => {
+    if (!cover) {
+      setPreview(null);
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(cover);
+    setPreview(objectUrl);
+
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [cover]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,70 +35,130 @@ const CreatePost = () => {
       return;
     }
 
-    const formData = new FormData();
-    formData.append('files.cover', cover); // pour Strapi, 'files.<champ>'
-    formData.append('data', JSON.stringify({
-      title,
-      description,
-    }));
+    if (!cover) {
+      setError("Veuillez sélectionner une image au format PNG ou JPEG.");
+      return;
+    }
 
     try {
-      const response = await fetch('http://localhost:1337/api/articles', {
-        method: 'POST',
+      // Étape 1 : upload image
+      const formImage = new FormData();
+      formImage.append("files", cover);
+
+      const uploadRes = await fetch("http://localhost:1337/api/upload", {
+        method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        body: formData,
+        body: formImage,
       });
 
-      if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
+      if (!uploadRes.ok) throw new Error("Échec de l'upload de l'image.");
+      const imageData = await uploadRes.json();
+      const imageId = imageData[0].id;
 
-      navigate('/'); // redirection vers la liste des posts
+      // Étape 2 : créer article
+      const res = await fetch("http://localhost:1337/api/articles", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          data: {
+            title,
+            description,
+            cover: imageId,
+          },
+        }),
+      });
+
+      if (!res.ok) throw new Error(`Erreur HTTP : ${res.status}`);
+      navigate("/posts");
+
     } catch (err) {
       setError(err.message);
     }
   };
 
   return (
-    <div className="max-w-xl mx-auto p-6 bg-white shadow rounded mt-10">
-      <h1 className="text-2xl font-bold mb-4">Créer un post</h1>
+    <>
+      <Navbar />
+      <div className="main-layout">
+        <Sidebar />
+        <div className="center-layout p-6">
+          <div className="max-w-xl mx-auto bg-white shadow rounded p-6">
+            <h1 className="text-2xl font-bold mb-4">Créer un post</h1>
 
-      {error && <p className="text-red-500 mb-4">{error}</p>}
+            {error && <p className="text-red-500 mb-4">{error}</p>}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="text"
-          placeholder="Titre"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="w-full border px-3 py-2 rounded"
-          required
-        />
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <label className="block">
+                <span className="text-gray-700">Titre</span>
+                <input
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="w-full border px-3 py-2 rounded"
+                  required
+                />
+              </label>
 
-        <textarea
-          placeholder="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          className="w-full border px-3 py-2 rounded"
-          required
-        />
+              <label className="block">
+                <span className="text-gray-700">Description</span>
+                <textarea
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  className="w-full border px-3 py-2 rounded"
+                  required
+                />
+              </label>
 
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => setCover(e.target.files[0])}
-          className="w-full"
-        />
+              <label className="block">
+                <span className="text-gray-700">Image (PNG ou JPEG)</span>
+                <input
+                  type="file"
+                  accept="image/png, image/jpeg"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file && (file.type === 'image/png' || file.type === 'image/jpeg')) {
+                      setCover(file);
+                      setError(null);
+                    } else {
+                      setError("Seules les images JPEG et PNG sont autorisées.");
+                      setCover(null);
+                    }
+                  }}
+                  className="w-full"
+                />
+              </label>
 
-        <button
-          type="submit"
-          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
-        >
-          Publier
-        </button>
-      </form>
-    </div>
+              {preview && (
+                <div className="mt-4">
+                  <p className="text-sm text-gray-500 mb-2">Aperçu de l'image :</p>
+                  <img
+                    src={preview}
+                    alt="aperçu"
+                    className="w-full max-w-xs rounded shadow"
+                  />
+                </div>
+              )}
+
+              <button
+                type="submit"
+                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
+              >
+                Publier
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <Footer />
+    </>
   );
-};
+}
 
 export default CreatePost;
+
+
