@@ -41,6 +41,10 @@ function CreatePost() {
     }
 
     try {
+      // Décoder le token pour récupérer l'utilisateur connecté
+      const decodedToken = jwt_decode(token);
+      const userId = decodedToken.id; // L'ID de l'utilisateur connecté
+
       // Étape 1 : upload image
       const formImage = new FormData();
       formImage.append("files", cover);
@@ -69,12 +73,13 @@ function CreatePost() {
             title,
             description,
             cover: imageId,
+            createdBy: userId, // L'auteur du post
           },
         }),
       });
 
       if (!res.ok) throw new Error(`Erreur HTTP : ${res.status}`);
-      navigate("/posts");
+      navigate("/posts"); //une fois créé on est renvoyé à cette adresse
 
     } catch (err) {
       setError(err.message);

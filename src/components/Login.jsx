@@ -1,13 +1,14 @@
 // src/components/Login.jsx
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // ← Import du hook de navigation
-import '../styles/Login.css';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate(); // Initialisation du hook de navigation
 
   // Redirection automatique si l'utilisateur est déjà connecté
   useEffect(() => {
@@ -49,6 +50,11 @@ const Login = () => {
     }
   };
 
+  // Fonction de redirection vers la page FirstLogin
+  const handleRedirectToFirstLogin = () => {
+    navigate('/first-login'); // Redirige vers la page FirstLogin
+  };
+
   return (
     <div className="connexion-page">
       <h2>Connexion</h2>
@@ -76,6 +82,16 @@ const Login = () => {
           {loading ? 'Connexion...' : 'Se connecter'}
         </button>
       </form>
+
+      {/* Ajout du bouton pour rediriger vers la page FirstLogin */}
+      <div className="mt-4">
+        <button
+          onClick={handleRedirectToFirstLogin}
+          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+        >
+          FirstLogin
+        </button>
+      </div>
     </div>
   );
 };

@@ -40,7 +40,7 @@ const FirstLogin = () => {
 
       const data = await response.json();
       localStorage.setItem('jwt', data.jwt);
-      window.location.href = '/posts';
+      window.location.href = '/main'; //une fois le compte créé on est redirigé vers main main
     } catch (err) {
       setError(err.message);
     } finally {

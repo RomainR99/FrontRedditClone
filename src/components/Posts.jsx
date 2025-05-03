@@ -45,6 +45,19 @@ const Posts = () => {
     fetchData();
   }, []);
 
+  //pour récuperer la date et la transformer pour etre plus stylisé
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleString('fr-FR', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false, // Format 24h
+    });
+  };
+
   if (loading) return <p className="text-blue-500">Chargement des posts...</p>;
   if (error) return <p className="text-red-500">Erreur : {error}</p>;
 
@@ -57,7 +70,10 @@ const Posts = () => {
               <div key={post.id} className="p-4 border border-gray-200 rounded shadow-md bg-white">
                 <h2 className="text-xl font-semibold text-gray-800 mb-2">{post.title}</h2>
                 <p className="text-gray-700 mb-4">{post.description}</p>
-  
+                <p className="text-gray-500 text-sm mb-2">
+                  {formatDate(post.publishedAt)}
+                </p>
+                
                 {post.cover && (
                   <img
                     src={`http://localhost:1337${post.cover.formats?.thumbnail?.url || post.cover.url}`}
