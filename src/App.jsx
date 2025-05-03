@@ -1,5 +1,7 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import React from 'react';
-import Main from './components/Main';
+import Main from './components/Main.jsx';
+import Profile from './components/Profile.jsx';
 import "./index.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
@@ -7,9 +9,12 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 
 function App() {
   return (
-    <>
-      <Main/>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/profile" element={<Profile/>} />
+      </Routes>
+    </BrowserRouter>
     
   )
 }
