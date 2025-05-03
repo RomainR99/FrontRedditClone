@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import "../Connexion.css";
 
@@ -42,9 +43,11 @@ function Connexion() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)} 
                 />
-                <button type="submit">
-                    Se connecter
-                </button>
+                <Link to={"/profile/brendan_pidoux"}>
+                    <button type="submit">
+                        Se connecter
+                    </button>
+                </Link>
             </form>
         </div>
     )

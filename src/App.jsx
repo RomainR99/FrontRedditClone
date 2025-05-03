@@ -4,6 +4,8 @@ import Main from './components/Main.jsx';
 import Profile from './components/Profile.jsx';
 import "./index.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import Connexion from './components/Connexion.jsx';
+import Inscription from './components/Inscription.jsx';
 
 
 
@@ -12,7 +14,9 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/profile" element={<Profile/>} />
+        <Route path="/profile/:username" element={<Profile/>}/>
+        <Route path='/connexion' element={<Connexion/>}/>
+        <Route path='/inscription' element={<Inscription/>}/>
       </Routes>
     </BrowserRouter>
     
