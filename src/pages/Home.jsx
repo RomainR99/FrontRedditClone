@@ -9,7 +9,7 @@ const Home = () => {
       title: 'Mon premier post sur Reddit Clone',
       content: 'Je suis ravi de partager mon premier post sur cette plateforme ! J\'espère que vous l\'apprécierez.',
       author: 'john_doe',
-      subreddit: 'programming',
+      subreddit: 'programmingaaaa',
       upvotes: 42,
       comments: 5,
       createdAt: 'Il y a 2 heures',
