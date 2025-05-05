@@ -74,13 +74,14 @@ const Posts = () => {
                   {formatDate(post.publishedAt)}
                 </p>
                 
-                {post.cover && (
+                {post.Image && post.Image[0] && (
                   <img
-                    src={`http://localhost:1337${post.cover.formats?.thumbnail?.url || post.cover.url}`}
+                    src={`http://localhost:1337${post.Image[0].formats?.thumbnail?.url || post.Image[0].url}`}
                     alt="cover"
                     className="w-full h-auto rounded"
                   />
                 )}
+
               </div>
             );
           })
