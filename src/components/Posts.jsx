@@ -20,7 +20,7 @@ const Posts = () => {
       }
 
       try {
-        const response = await fetch('http://localhost:1337/api/articles?populate=cover', {
+        const response = await fetch('http://localhost:1337/api/articles?populate=*', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
