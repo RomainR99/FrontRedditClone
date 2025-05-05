@@ -70,6 +70,7 @@ const Posts = () => {
               <div key={post.id} className="p-4 border border-gray-200 rounded shadow-md bg-white">
                 <h2 className="text-xl font-semibold text-gray-800 mb-2">{post.title}</h2>
                 <p className="text-gray-700 mb-4">{post.description}</p>
+                <p className="text-gray-700 mb-4">{post.user.username}</p>
                 <p className="text-gray-500 text-sm mb-2">
                   {formatDate(post.publishedAt)}
                 </p>

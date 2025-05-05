@@ -39,6 +39,7 @@ const Login = () => {
 
       const data = await response.json();
       const token = data.jwt;
+      console.log(data.user)
 
       localStorage.setItem('jwt', token);
       /*window.location.href = '/posts';*/

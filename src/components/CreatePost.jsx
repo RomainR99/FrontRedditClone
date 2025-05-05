@@ -41,9 +41,7 @@ function CreatePost() {
     }
 
     try {
-      // Décoder le token pour récupérer l'utilisateur connecté
-      const decodedToken = jwt_decode(token);
-      const userId = decodedToken.id; // L'ID de l'utilisateur connecté
+
 
       // Étape 1 : upload image
       const formImage = new FormData();
@@ -70,10 +68,10 @@ function CreatePost() {
         },
         body: JSON.stringify({
           data: {
-            title,
-            description,
-            cover: imageId,
-            createdBy: userId, // L'auteur du post
+            Title: title,           // attention à la casse ! (ex : "Title" et pas "title" si le champ Strapi s'appelle comme ça)
+            Description: description,
+            Image: imageId,  
+            
           },
         }),
       });
