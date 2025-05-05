@@ -73,7 +73,7 @@ function CreatePost() {
             title,
             description,
             cover: imageId,
-            createdBy: userId, // L'auteur du post
+            //createdBy: userId, // L'auteur du post
           },
         }),
       });
