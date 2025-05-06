@@ -20,7 +20,7 @@ function PostCard() {
             </div>
 
             <div className="post-footer">
-              <span><i className="bi bi-arrow-up"></i> 457</span>
+              <span><i class="bi bi-hand-thumbs-up"></i> 457 <i class="bi bi-hand-thumbs-down"></i></span>
               <span><i className="bi bi-chat"></i> 68</span>
               <span><i className="bi bi-share"></i> Partager</span>
             </div>
