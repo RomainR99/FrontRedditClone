@@ -6,6 +6,7 @@ function Main() {
     return (
         <>
             <MainPage/>
+            
         </>
     )
 }

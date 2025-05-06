@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import "../styles/Post.css";
+import Comment from "./Comment.jsx";
+
 
 const getCurrentUserId = () => {
   const token = localStorage.getItem("jwt");
@@ -129,10 +131,10 @@ const Posts = () => {
             );
           })
         ) : (
-          <p className="text-center text-gray-500">Aucun article disponible</p>
+          <Comment/>
         )}
       </div>
-    </div>
+    </div>      
   );
 };
 

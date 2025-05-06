@@ -7,6 +7,7 @@ import Footer from "./Footer.jsx";
 import Posts from "./Posts.jsx";
 
 
+
 function MainPage() {
     return (
         <>
@@ -16,6 +17,7 @@ function MainPage() {
                 <div className="center-layout">
                 <PostList/>
                 <Posts/>
+                
                 </div>
                 <Suggestion/>
             </div>
