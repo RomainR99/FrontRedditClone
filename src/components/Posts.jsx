@@ -1,6 +1,19 @@
-// src/components/Posts.jsx
 import React, { useState, useEffect } from 'react';
 import "../styles/Post.css";
+
+const getCurrentUserId = () => {
+  const token = localStorage.getItem("jwt");
+  if (!token) return null;
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1])); // décode le JWT
+    return payload.id; // Strapi inclut l’id de l'utilisateur ici
+  } catch (error) {
+    console.error("Erreur lors du décodage du token :", error);
+    return null;
+  }
+};
+
+const currentUserId = getCurrentUserId();
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
@@ -28,7 +41,6 @@ const Posts = () => {
           },
         });
 
-
         if (!response.ok) {
           throw new Error(`Erreur HTTP : ${response.status}`);
         }
@@ -45,7 +57,25 @@ const Posts = () => {
     fetchData();
   }, []);
 
-  //pour récuperer la date et la transformer pour etre plus stylisé
+  const handleDelete = async (id) => {
+    const token = localStorage.getItem("jwt");
+    try {
+      const res = await fetch(`http://localhost:1337/api/articles/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) throw new Error("Erreur lors de la suppression de l'article.");
+
+      setPosts((prev) => prev.filter((post) => post.id !== id));
+    } catch (err) {
+      alert(`Erreur : ${err.message}`);
+    }
+  };
+
+  // Pour formater la date de manière plus lisible
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleString('fr-FR', {
@@ -68,8 +98,20 @@ const Posts = () => {
           posts.map((post) => {
             return (
               <div key={post.id} className="p-4 border border-gray-200 rounded shadow-md bg-white">
-                <h2 className="text-xl font-semibold text-gray-800 mb-2">{post.title}</h2>
-                <p className="text-gray-700 mb-4">{post.description}</p>
+                <button
+                  onClick={() => handleDelete(post.id)}
+                  disabled={post.user?.id !== currentUserId}
+                  className={`px-2 py-1 rounded text-white ${
+                    post.user?.id === currentUserId
+                      ? "bg-red-500 hover:bg-red-600 cursor-pointer"
+                      : "bg-gray-300 cursor-not-allowed"
+                  }`}
+                >
+                  x
+                </button> {/*le bouton est grisé si le user est =! de créateur */}
+
+                <h2 className="text-xl font-semibold text-gray-800 mb-2">{post.Title}</h2>
+                <p className="text-gray-700 mb-4">{post.Description}</p>
                 <p className="text-gray-700 mb-4">{post.user.username}</p>
                 <p className="text-gray-500 text-sm mb-2">
                   {formatDate(post.publishedAt)}
@@ -92,9 +134,10 @@ const Posts = () => {
       </div>
     </div>
   );
-  
 };
 
 export default Posts;
+
+
 
 
