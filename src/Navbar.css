@@ -26,6 +26,65 @@
     font-size: 14px;
 }
 
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+}
+
+.icon-wrapper {
+    position: relative;
+    cursor: pointer;
+    font-size: 18px;
+    color: #ccc;
+}
+
+.icon-wrapper:hover {
+    color: #4ea1f3;
+}
+
+.create-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #4ea1f3;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.create-btn:hover {
+    background-color: #3189d6;
+}
+
+.dropdown {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background-color: #1e1e1e;
+    border-radius: 6px;
+    padding: 10px;
+    width: 180px;
+    box-shadow: 0 2p 8px rgba(0, 0, 0, 0.3);
+    z-index: 999;
+}
+
+.dropdown p {
+    margin: 0;
+    padding: 8px;
+    color: #ccc;
+    cursor: pointer;
+}
+
+.dropdown p:hover {
+    background-color: #333;
+    
+}
+
 .search::placeholder {
     color: #999;
 }
