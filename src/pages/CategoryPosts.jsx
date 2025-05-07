@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 const CategoryPosts = () => {
-  const { name } = useParams(); // Récupère la catégorie via l'URL
+  const { name } = useParams();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -19,7 +19,7 @@ const CategoryPosts = () => {
 
       try {
         const response = await fetch(
-          `http://localhost:1337/api/articles?filters[Categorie][$eq]=${name}&populate=*`,
+          `http://localhost:1337/api/posts?filters[Categorie][$eq]=${name}&populate=*`,
           {
             method: "GET",
             headers: {
@@ -43,9 +43,8 @@ const CategoryPosts = () => {
     };
 
     fetchPostsByCategory();
-  }, [name]); // Le `useEffect` se déclenche quand `name` change
+  }, [name]);
 
-  // Pour formater la date de manière plus lisible
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleString('fr-FR', {
@@ -73,17 +72,19 @@ const CategoryPosts = () => {
             <div key={post.id} className="post-card p-4 border border-gray-300 rounded mb-6 bg-white">
               <h2 className="text-xl font-semibold">{post.Title}</h2>
               <p className="text-gray-700">{post.Description}</p>
-              <p className="text-gray-500 text-sm">Publié le {formatDate(post.publishedAt)}</p>
+              <p className="text-gray-500 text-sm">Publié le {formatDate(post.attributes.publishedAt)}</p>
 
-              {post.Image && post.Image[0] && (
+              {post.attributes.Image?.data && (
                 <img
-                  src={`http://localhost:1337${post.Image[0].formats?.thumbnail?.url || post.Image[0].url}`}
-                  alt={post.Title}
+                  src={`http://localhost:1337${post.attributes.Image.data.attributes.url}`}
+                  alt={post.attributes.Title}
                   className="w-full h-auto rounded mt-4"
                 />
               )}
 
-              <p className="text-gray-500 mt-2">{post.user?.username}</p>
+              <p className="text-gray-500 mt-2">
+                {post.attributes.user?.data?.attributes?.username}
+              </p>
             </div>
           ))}
         </div>
@@ -93,3 +94,4 @@ const CategoryPosts = () => {
 };
 
 export default CategoryPosts;
+

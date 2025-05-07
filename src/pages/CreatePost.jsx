@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navbar from "./Navbar.jsx";
-import Sidebar from "./Sidebar.jsx";
-import Footer from "./Footer.jsx";
+import Navbar from "../components/Navbar.jsx";
+import Sidebar from "../components/Sidebar.jsx";
+import Footer from "../components/Footer.jsx";
 import "../styles/MainPage.css";
 
 function CreatePost() {

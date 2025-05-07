@@ -1,13 +1,13 @@
 // src/App.jsx
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import SignUp from './components/SignUp';
-import Login from './components/Login';
+import SignUp from './pages/SignUp';
+import Login from './pages/Login';
 import Posts from './components/Posts';
-import FirstLogin from './components/FirstLogin'; // Importer FirstLogin
-import Main from './components/Main';
-import CreatePost from './components/CreatePost';
-import CategoryPosts from './components/CategoryPosts';
+import FirstLogin from './pages/FirstLogin'; // Importer FirstLogin
+import Main from './pages/Main';
+import CreatePost from './pages/CreatePost';
+import CategoryPosts from './pages/CategoryPosts';
 
 function App() {
   return (

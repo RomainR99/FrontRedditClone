@@ -1,10 +1,10 @@
-import Navbar from "./Navbar.jsx";
-import Sidebard from "./Sidebar.jsx";
-import PostList from "./PostList.jsx";
+import Navbar from "../components/Navbar.jsx";
+import Sidebard from "../components/Sidebar.jsx";
+import PostList from "../components/PostList.jsx";
 import "../styles/MainPage.css"
-import Suggestion from "./Suggestion.jsx";
-import Footer from "./Footer.jsx";
-import Posts from "./Posts.jsx";
+import Suggestion from "../components/Suggestion.jsx";
+import Footer from "../components/Footer.jsx";
+import Posts from "../components/Posts.jsx";
 
 
 
