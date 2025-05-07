@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 import { useState } from "react"
 import "../Navbar.css"
 import CreatePost from "./CreatePost.jsx";
+import Main from "./Main.jsx";
 
 function Navbar() {
     const [showCreate, setShowCreate] = useState(false);
@@ -10,7 +11,9 @@ function Navbar() {
         <>
             <header className="navbar">
                 <div className="navbar-left">
-                    <h1 className="logo">Reddit</h1>
+                    <Link to={"/"}>
+                        <h1 className="logo">Reddit</h1>
+                    </Link>
                 </div>
 
                 <div className="navbar-center">
@@ -30,7 +33,7 @@ function Navbar() {
                 </div>
             </header>
             {showCreate && (
-                <CreatePost onCLose={() => setShowCreate(false)}/>
+                <CreatePost onClose={() => setShowCreate(false)}/>
             )}
         </>
         

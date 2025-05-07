@@ -1,12 +1,19 @@
 import PostCard from "./PostCard.jsx";
+import { usePosts } from "./PostContext.jsx";
 import "../PostList.css";
 
 
 function PostList() {
+    const { posts } = usePosts()
     return (
         <div className="post-list">
-            <PostCard title="Mon premier post" content="Bienvenue sur Reddit"/>
-            <PostCard title="Nouveau design" content="J'ai refait la page principale en React."/>
+            {posts.length === 0 ? (
+                <p>Aucune publication pour le moment</p>
+            ) : (
+                posts.map((post, index) => (
+                    <PostCard key={index} title={post.title} content={post.content} image={post.image}/>
+                ))
+            )}
         </div>
     )
 }

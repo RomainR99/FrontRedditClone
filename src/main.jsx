@@ -1,11 +1,14 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
+import { PostProvider } from './components/PostContext.jsx'
 import './index.css'
 import './Connexion.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
+    <PostProvider>
+      <App />
+    </PostProvider>
   </StrictMode>,
 )

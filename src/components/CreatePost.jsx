@@ -1,15 +1,19 @@
 import { useState } from "react";
+import { usePosts } from "./PostContext.jsx";
 import "../CreatePost.css";
 
-function CreatePost({onclose}) {
+function CreatePost({onClose}) {
+    const { addPost } = usePosts();
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        const newPost = { title, content, image }
+        addPost(newPost)
         console.log({title, content, image})
-        onclose();
+        onClose();
     }
 
     return (
@@ -30,13 +34,20 @@ function CreatePost({onclose}) {
                     rows="4"
                 />
                 <input 
-                    type="text" 
+                    type="file" 
+                    accept="image/*"
                     placeholder="Image (URL)"
-                    value={image}
-                    onChange={(e) => setImage(e.target.value)}
+                    onChange={(e) => {
+                        const file = e.target.files[0]
+                        const reader = new FileReader()
+                        reader.onloadend = () => {
+                            setImage(reader.result)
+                        }
+                        if (file) reader.readAsDataURL(file)
+                    }}
                 />
                 <button type="submit">Publier</button>
-                <button type="button" className="cancel" onClick={onclose}>Annuler</button>
+                <button type="button" className="cancel" onClick={onClose}>Annuler</button>
             </form>
         </div>
     )

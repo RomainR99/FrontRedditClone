@@ -1,6 +1,8 @@
+import { useState } from "react";
 import "../PostCard.css";
 
-function PostCard() {
+function PostCard({ title, content, image }) {
+  
     return (
         <div className="post-card">
             <div className="post-header">
@@ -13,14 +15,16 @@ function PostCard() {
               <button className="join-btn">Rejoindre</button>
             </div>
 
-            <h3 className="post-title">This guy has been installing Arch for almost 300 days</h3>
+            <h3 className="post-title">{title}</h3>
 
-            <div className="post-image">
-              <img src="https://preview.redd.it/i-think-i-like-posting-selfies-on-reddit-too-much-v0-0b32spbi41ob1.jpg?width=640&crop=smart&auto=webp&s=7f60363157bc6721b69c511de368b31473cbefc8" alt="content" />
-            </div>
-
+            {image && (
+              <div className="post-image">
+                <img src={image} alt="content" />
+              </div>
+            )}
+            <p className="post-content">{content}</p>
             <div className="post-footer">
-              <span><i class="bi bi-hand-thumbs-up"></i> 457 <i class="bi bi-hand-thumbs-down"></i></span>
+              <span><i className="bi bi-hand-thumbs-up"></i> 457 <i className="bi bi-hand-thumbs-down"></i></span>
               <span><i className="bi bi-chat"></i> 68</span>
               <span><i className="bi bi-share"></i> Partager</span>
             </div>
