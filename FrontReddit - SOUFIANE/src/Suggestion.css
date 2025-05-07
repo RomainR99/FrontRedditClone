@@ -1,0 +1,38 @@
+.suggestions {
+    width: 250px;
+    background-color: #1a1a1a;
+    padding: 20px;
+    border-radius: 10px;
+}
+  
+.suggestions h2 {
+    color: #fff;
+    margin-bottom: 15px;
+}
+  
+.suggestions ul {
+    list-style: none;
+    padding: 0;
+}
+  
+.suggestions li {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #ccc;
+}
+  
+.suggestions button {
+    background-color: #4ea1f3;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 20px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 12px;
+}
+  
+.suggestions button:hover {
+    background-color: #3189d6;
+}
