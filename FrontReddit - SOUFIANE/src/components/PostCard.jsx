@@ -1,85 +1,82 @@
 import { useState } from "react";
 import "../PostCard.css";
 
-function PostCard() {
-    const [upvoted, setUpvoted] = useState(false);
-    const [downvoted, setDownvoted] = useState(false);
-    const [votes, setVotes] = useState(457);
-    const [saved, setSaved] = useState(false);
+function PostCard({ title, content, image }) {
+    const [likes, setLikes] = useState(0);
+    const [dislikes, setDislikes] = useState(0);
+    const [comments, setComments] = useState(0);
+    const [shared, setShared] = useState(false);
+    const [showCommentInput, setShowCommentInput] = useState(false);
+    const [newComment, setNewComment] = useState('');
 
-    const handleVote = (type) => {
-        if (type === 'up') {
-            if (upvoted) {
-                setVotes(votes - 1);
-                setUpvoted(false);
-            } else {
-                setVotes(votes + 1);
-                setUpvoted(true);
-                if (downvoted) {
-                    setVotes(votes + 2);
-                    setDownvoted(false);
-                }
-            }
-        } else {
-            if (downvoted) {
-                setVotes(votes + 1);
-                setDownvoted(false);
-            } else {
-                setVotes(votes - 1);
-                setDownvoted(true);
-                if (upvoted) {
-                    setVotes(votes - 2);
-                    setUpvoted(false);
-                }
-            }
-        }
-    };
+    const handleLike = () => setLikes((prev) => prev + 1)
+    const handleDislike = () => setDislikes((prev) => prev + 1)
+    const handleShare = () => {
+      setShared(true)
+      navigator.clipboard.writeText(window.location.href)
+      setTimeout(() => setShared(false), 2000);
+    }
 
+    const tooggleCommentInput = () => setShowCommentInput(!showCommentInput)
+    const handleCommentSubmit = (e) => {
+      e.preventDefault()
+      if (newComment.trim()) {
+        setComments((prev) => prev + 1)
+        setNewComment('')
+        setShowCommentInput(false)
+      }
+    }
+  
     return (
         <div className="post-card">
             <div className="post-header">
-                <img src="https://i.etsystatic.com/20335141/r/il/eb2b91/3883806172/il_570xN.3883806172_mk03.jpg" alt="avatar" className="avatar" />
-                <div className="meta">
-                    <span className="subreddit">r/linux</span>
-                    <span className="dot">•</span>
-                    <span className="time">il y a 3 h</span>
-                    <span className="dot">•</span>
-                    <span className="author">u/archlinux_user</span>
-                </div>
-                <button className="join-btn">Rejoindre</button>
+              <img src="https://i.etsystatic.com/20335141/r/il/eb2b91/3883806172/il_570xN.3883806172_mk03.jpg" alt="avatar" className="avatar" />
+              <div className="meta">
+                <span className="subreddit">r/linux</span>
+                <span className="dot">•</span>
+                <span className="time">il y a 3 h</span>
+              </div>
+              <button className="join-btn">Rejoindre</button>
             </div>
 
-            <h3 className="post-title">This guy has been installing Arch for almost 300 days</h3>
+            <h3 className="post-title">{title}</h3>
 
-            <div className="post-image">
-                <img src="https://preview.redd.it/i-think-i-like-posting-selfies-on-reddit-too-much-v0-0b32spbi41ob1.jpg?width=640&crop=smart&auto=webp&s=7f60363157bc6721b69c511de368b31473cbefc8" alt="content" />
-            </div>
-
+            {image && (
+              <div className="post-image">
+                <img src={image} alt="content" />
+              </div>
+            )}
+            <p className="post-content">{content}</p>
+            
             <div className="post-footer">
-                <div className="vote-buttons">
-                    <button 
-                        className={`vote-btn ${upvoted ? 'upvoted' : ''}`}
-                        onClick={() => handleVote('up')}
-                    >
-                        <i className="bi bi-arrow-up"></i>
-                    </button>
-                    <span className="vote-count">{votes}</span>
-                    <button 
-                        className={`vote-btn ${downvoted ? 'downvoted' : ''}`}
-                        onClick={() => handleVote('down')}
-                    >
-                        <i className="bi bi-arrow-down"></i>
-                    </button>
-                </div>
-                <span><i className="bi bi-chat"></i> 68 commentaires</span>
-                <span><i className="bi bi-share"></i> Partager</span>
-                <span 
-                    className={saved ? 'saved' : ''}
-                    onClick={() => setSaved(!saved)}
-                >
-                    <i className={`bi bi-${saved ? 'bookmark-fill' : 'bookmark'}`}></i> Sauvegarder
-                </span>
+              <span onClick={handleLike} style={{ cursor: 'pointer' }}>
+                <i className="bi bi-hand-thumbs-up"></i> {likes}
+              </span>
+              &nbsp;
+              <span onClick={handleDislike} style={{ cursor: 'pointer' }}>
+                <i className="bi bi-hand-thumbs-down"></i> {dislikes}
+              </span>
+              &nbsp;
+              <span onClick={tooggleCommentInput} style={{ cursor: 'pointer' }}>
+                <i className="bi bi-chat"></i> {comments}
+              </span>
+              &nbsp;
+              <span onClick={handleShare} style={{ cursor: 'pointer' }}>
+                <i className="bi bi-share"></i> {shared ? "Lien copié!" : "Partager"}
+              </span>
             </div>
+            {showCommentInput && (
+              <form onSubmit={handleCommentSubmit} className="comment-form">
+                <input 
+                  type="text"
+                  value={newComment}
+                  onChange={(e) => setNewComment(e.target.value)}
+                  placeholder="Ajouter un commentaire..."
+                />
+                <button type="submit">Envoyer</button>
+              </form>
+
+            )}
         </div>
     )
 }
