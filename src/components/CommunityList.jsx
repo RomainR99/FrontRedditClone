@@ -1,19 +1,39 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
-const communities = ['devweb', 'reactjs', 'anime'];
+const CommunityList = () => {
+  const [subreddits, setSubreddits] = useState([]);
 
-export default function CommunityList() {
+  useEffect(() => {
+    axios.get('http://localhost:1337/api/subreddits')
+      .then((res) => {
+        setSubreddits(res.data.data || []); // sécurité si data est undefined
+      })
+      .catch((err) => {
+        console.error("Erreur lors du chargement des subreddits :", err);
+      });
+  }, []);
+
   return (
-    <aside className="bg-zinc-800 p-4 rounded-xl">
-      <h2 className="text-gray-400 uppercase text-sm mb-4">Communautés</h2>
-      <ul className="space-y-2">
-        {communities.map((com, idx) => (
-          <li key={idx} className="flex justify-between items-center">
-            <span>r/{com}</span>
-            <button className="bg-white text-black text-sm px-2 py-1 rounded hover:bg-gray-200">Rejoindre</button>
-          </li>
-        ))}
+    <div className="bg-gray-800 p-4 text-white rounded">
+      <h3 className="text-lg font-bold mb-2">Communautés</h3>
+      <ul>
+        {subreddits.map((sub) => {
+          const name = sub?.attributes?.name;
+          if (!name) return null; // éviter de crasher si name n'existe pas
+
+          return (
+            <li key={sub.id}>
+              <Link to={`/subreddit/${sub.id}`} className="text-orange-400 hover:underline">
+                r/{name}
+              </Link>
+            </li>
+          );
+        })}
       </ul>
-    </aside>
+    </div>
   );
-}
+};
+
+export default CommunityList;

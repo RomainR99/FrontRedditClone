@@ -1,18 +1,29 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+// Pages
 import Home from './pages/Home';
-// autres imports...
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Post from './pages/Post';
+import Subreddit from './pages/Subreddit';
+
+// Composants
+import CreatePost from './components/CreatePost';
 
 function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        {/* Autres routes ici */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/post/:id" element={<Post />} />
+        <Route path="/subreddit/:slug" element={<Subreddit />} />
+        <Route path="/create-post" element={<CreatePost />} />
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 }
 
 export default App;
-

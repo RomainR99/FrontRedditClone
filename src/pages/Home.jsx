@@ -9,10 +9,18 @@ const Home = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:1337/api/posts?populate=*")
+    fetch("http://localhost:1337/api/posts")
       .then((res) => res.json())
-      .then((data) => setPosts(data.data))
-      .catch((err) => console.error("Erreur en récupérant les posts :", err));
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setPosts(data);
+        } else if (data.data) {
+          setPosts(data.data);
+        } else {
+          console.warn("Structure inattendue des données :", data);
+        }
+      })
+      .catch((err) => console.error("Erreur lors de la récupération des posts :", err));
   }, []);
 
   return (
@@ -21,29 +29,35 @@ const Home = () => {
 
       <main className="min-h-screen bg-zinc-900 text-white px-6 py-8">
         <div className="grid grid-cols-1 md:grid-cols-[250px_1fr_300px] gap-6 max-w-screen-xl mx-auto">
-
-          {/* Colonne gauche - Sidebar */}
+          {/* Sidebar */}
           <aside className="bg-zinc-800 p-4 rounded-xl">
             <Sidebar />
           </aside>
 
-          {/* Colonne centrale - Liste des posts */}
+          {/* Posts */}
           <section className="space-y-4">
-            <h1 className="text-4xl font-bold mb-4">Liste des Posts</h1>
+            <h1 className="text-4xl font-bold mb-4 text-orange-500 flex items-center gap-2">
+              <span>🔥</span> Posts populaires
+            </h1>
+
             {posts.length === 0 ? (
-              <p>Aucun post pour le moment.</p>
+              <p className="text-gray-400">Aucun post pour le moment.</p>
             ) : (
               posts.map((post) => (
-                <PostCard key={post.id} post={post} />
+                <div
+                  key={post.id}
+                  className="bg-zinc-800 p-4 rounded-lg shadow hover:shadow-orange-400/20 transition"
+                >
+                  <PostCard post={post} />
+                </div>
               ))
             )}
           </section>
 
-          {/* Colonne droite - Communautés */}
+          {/* Communautés */}
           <aside className="bg-zinc-800 p-4 rounded-xl">
             <CommunityList />
           </aside>
-
         </div>
       </main>
 
@@ -53,9 +67,5 @@ const Home = () => {
 };
 
 export default Home;
-
-
-
-
 
 
