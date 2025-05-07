@@ -8,6 +8,8 @@ import Register from './pages/Register';
 import Post from './pages/Post';
 import Subreddit from './pages/Subreddit';
 import CategoryPage from './pages/CategoryPage'; // à créer
+import Profile from './pages/Profile';
+
 
 // Composants
 import CreatePost from './components/CreatePost';
@@ -23,6 +25,7 @@ function App() {
         <Route path="/subreddit/:slug" element={<Subreddit />} />
         <Route path="/create-post" element={<CreatePost />} />
         <Route path="/category/:name" element={<CategoryPage />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );

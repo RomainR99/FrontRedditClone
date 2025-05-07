@@ -1,47 +1,92 @@
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
-function Login() {
+const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch('http://localhost:1337/api/auth/local', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          identifier: email,
+          password: password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        localStorage.setItem('user', JSON.stringify(data.user));
+        localStorage.setItem('jwt', data.jwt);
+        navigate('/profile');
+      } else {
+        setError(data.error?.message || 'Échec de la connexion');
+      }
+    } catch (err) {
+      console.error('Erreur :', err);
+      setError("Une erreur s'est produite.");
+    }
+  };
+
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-2xl shadow-xl">
-        <h2 className="text-2xl font-bold text-center text-gray-800">Se connecter à Reddit</h2>
+    <>
+      <Navbar />
+      <main className="flex items-center justify-center min-h-screen bg-zinc-900 text-white px-4">
+        <div className="bg-zinc-800 p-8 rounded-xl w-full max-w-md shadow-md">
+          <h1 className="text-3xl font-bold mb-6 text-center text-orange-500">Se connecter</h1>
 
-        <form className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Email</label>
-            <input
-              type="email"
-              placeholder="ex: nom@email.com"
-              className="w-full px-4 py-2 mt-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
+          {error && (
+            <div className="bg-red-600 text-white p-2 rounded mb-4 text-sm">{error}</div>
+          )}
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Mot de passe</label>
-            <input
-              type="password"
-              placeholder="********"
-              className="w-full px-4 py-2 mt-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div>
+              <label className="block mb-1 text-sm">Email</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-3 py-2 bg-zinc-700 border border-zinc-600 rounded text-white"
+                required
+              />
+            </div>
 
-          <button
-            type="submit"
-            className="w-full px-4 py-2 font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700"
-          >
-            Se connecter
-          </button>
-        </form>
+            <div>
+              <label className="block mb-1 text-sm">Mot de passe</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-3 py-2 bg-zinc-700 border border-zinc-600 rounded text-white"
+                required
+              />
+            </div>
 
-        <p className="text-sm text-center text-gray-600">
-          Pas encore de compte ?{" "}
-          <Link to="/register" className="text-blue-600 hover:underline">
-            Créer un compte
-          </Link>
-        </p>
-      </div>
-    </div>
+            <button
+              type="submit"
+              className="w-full bg-orange-500 hover:bg-orange-600 py-2 rounded font-semibold"
+            >
+              Connexion
+            </button>
+          </form>
+        </div>
+      </main>
+      <Footer />
+    </>
   );
-}
+};
 
 export default Login;
+
+
