@@ -8,6 +8,10 @@ export function PostProvider({ children }) {
         return saved ? JSON.parse(saved) : [];
     });
 
+    const deletePost = (indexToDelete) => {
+        setPosts((prev) => prev.filter((_, index) => index !== indexToDelete))
+    }
+
     useEffect(() => {
         localStorage.setItem('posts', JSON.stringify(posts))
     }, [posts])
@@ -17,7 +21,7 @@ export function PostProvider({ children }) {
     }
 
     return (
-        <PostContext.Provider value={{ posts, addPost}}>
+        <PostContext.Provider value={{ posts, addPost, deletePost}}>
             {children}
         </PostContext.Provider>
     )

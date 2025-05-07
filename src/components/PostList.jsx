@@ -4,14 +4,20 @@ import "../PostList.css";
 
 
 function PostList() {
-    const { posts } = usePosts()
+    const { posts, deletePost } = usePosts()
     return (
         <div className="post-list">
             {posts.length === 0 ? (
                 <p>Aucune publication pour le moment</p>
             ) : (
                 posts.map((post, index) => (
-                    <PostCard key={index} title={post.title} content={post.content} image={post.image}/>
+                    <PostCard 
+                        key={index} 
+                        title={post.title} 
+                        content={post.content} 
+                        image={post.image}
+                        onDelete={() => deletePost(index)}
+                    />
                 ))
             )}
         </div>

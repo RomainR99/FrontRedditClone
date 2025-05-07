@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "../PostCard.css";
 
-function PostCard({ title, content, image }) {
+function PostCard({ title, content, image, onDelete }) {
     const [likes, setLikes] = useState(0);
     const [dislikes, setDislikes] = useState(0);
     const [comments, setComments] = useState(0);
@@ -58,11 +58,15 @@ function PostCard({ title, content, image }) {
               </span>
               &nbsp;
               <span onClick={tooggleCommentInput} style={{ cursor: 'pointer' }}>
-                <i className="bi bi-chat"></i> {comments}
+                <i className="bi bi-chat"></i> {comments.length}
               </span>
               &nbsp;
               <span onClick={handleShare} style={{ cursor: 'pointer' }}>
                 <i className="bi bi-share"></i> {shared ? "Lien copié!" : "Partager"}
+              </span>
+              &nbsp;
+              <span onClick={onDelete} style={{ cursor: 'pointer', color: '#f87171' }}>
+                <i className="bi bi-trash"></i> Supprimer
               </span>
             </div>
             {showCommentInput && (
@@ -75,7 +79,6 @@ function PostCard({ title, content, image }) {
                 />
                 <button type="submit">Envoyer</button>
               </form>
-
             )}
         </div>
     )
