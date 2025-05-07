@@ -7,6 +7,7 @@ import Posts from './components/Posts';
 import FirstLogin from './components/FirstLogin'; // Importer FirstLogin
 import Main from './components/Main';
 import CreatePost from './components/CreatePost';
+import CategoryPosts from './components/CategoryPosts';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/first-login" element={<FirstLogin />} /> 
         <Route path="/main" element={<Main />} />
         <Route path="/createPost" element={<CreatePost />} />
+        <Route path="/categorie/:name" element={<CategoryPosts />} />
       </Routes>
     </Router>
   );

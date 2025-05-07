@@ -1,5 +1,7 @@
 import "../styles/Sidebar.css";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+
 
 function Sidebard() {
     const [category, setCategory] = useState(null)
@@ -7,6 +9,15 @@ function Sidebard() {
     const toggleCategory = (cat) => {
         setCategory(category === cat ? null : cat)
     } 
+    const subcategory = {
+        internet: ['Memes', 'Buzz', 'Animeaux', 'Humour', 'Satisfaisant'],
+        jeux: ['Action', 'Aventure', 'E-sports', 'Mobiles', 'Rôle', 'Stratégie'],
+        questions: ['Question/Réponse', 'Histoire/Confessions'],
+        tech: ['Machine Learning', 'Informatique', 'Programmation', 'Intelligence Artificielle', 'Logiciel/Application', 'Eléctronique DIY'],
+        pop: ['Célébrités', 'Artistes/Influenceurs', 'Podcasts', 'Streamers'],
+        films: ['Films', 'Séries', 'Documentaires', 'Critiques', 'Bandes Annonces']
+    };
+    
     return (
         <aside className="sidebar">
             <h2 className="section-title">Catégories</h2>
@@ -15,15 +26,16 @@ function Sidebard() {
                 <span className="category-label">Culture Internet</span>
                 <i className={`bi ${category === 'internet' ? 'bi-chevron-up' : 'bi-chevron-down'} arrow`}></i>
             </div>
-            {category === 'internet' && (
-                <ul className="subcategory">
-                    <li>Memes</li>
-                    <li>Buzz</li>
-                    <li>Animeaux</li>
-                    <li>Humour</li>
-                    <li>Satisfaisant</li>
-                </ul>
+            {subcategory === 'internet' && (
+            <ul className="subcategory">
+                <li><Link to={`/categorie/categoriec`} className="subcategory-link">Meme</Link></li>
+                <li><Link to={`/categorie/categoriec`} className="subcategory-link">Buzz</Link></li>
+                <li><Link to={`/categorie/categoriec`} className="subcategory-link">Animeaux</Link></li>
+                <li><Link to={`/categorie/categoriec`} className="subcategory-link">Humour</Link></li>
+                <li><Link to={`/categorie/categoriec`} className="subcategory-link">Satisfaisant</Link></li>
+            </ul>
             )}
+
 
             <div className="category" onClick={() => toggleCategory('jeux')}>
                 <i className="bi bi-controller"></i>
