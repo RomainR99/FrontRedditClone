@@ -19,7 +19,7 @@ function App() {
         <Route path="/first-login" element={<FirstLogin />} /> 
         <Route path="/main" element={<Main />} />
         <Route path="/createPost" element={<CreatePost />} />
-        <Route path="/categorie/:name" element={<CategoryPosts />} />
+        <Route path="/categorie/:nom" element={<CategoryPosts />} />
       </Routes>
     </Router>
   );
