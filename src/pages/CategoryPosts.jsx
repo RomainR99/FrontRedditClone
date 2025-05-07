@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 const CategoryPosts = () => {
-  const { name } = useParams();
+  const { nom } = useParams();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -19,16 +19,15 @@ const CategoryPosts = () => {
 
       try {
         const response = await fetch(
-          `http://localhost:1337/api/posts?filters[Categorie][$eq]=${name}&populate=*`,
+          `http://localhost:1337/api/articles?filters[Categorie][$eq]=${encodeURIComponent(nom)}&populate=*`,
           {
-            method: "GET",
             headers: {
-              "Authorization": `Bearer ${token}`,
-              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json',
             },
           }
         );
-
+        
         if (!response.ok) {
           throw new Error(`Erreur HTTP : ${response.status}`);
         }
