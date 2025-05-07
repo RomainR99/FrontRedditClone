@@ -11,7 +11,16 @@ function CreatePost() {
   const [cover, setCover] = useState(null);
   const [preview, setPreview] = useState(null);
   const [error, setError] = useState(null);
+  const [categoryId, setCategoryId] = useState("");
   const navigate = useNavigate();
+
+  
+
+  // Charger les catégories depuis Strapi
+  const enumCategories = ["categorie",
+    "categorieb",
+    "categoriec",];
+
 
   // Nettoyage de l'aperçu d'image
   useEffect(() => {
@@ -40,9 +49,12 @@ function CreatePost() {
       return;
     }
 
+    if (!categoryId) {
+      setError("Veuillez sélectionner une catégorie.");
+      return;
+    }
+
     try {
-
-
       // Étape 1 : upload image
       const formImage = new FormData();
       formImage.append("files", cover);
@@ -68,16 +80,16 @@ function CreatePost() {
         },
         body: JSON.stringify({
           data: {
-            Title: title,           // attention à la casse ! (ex : "Title" et pas "title" si le champ Strapi s'appelle comme ça)
+            Title: title,
             Description: description,
-            Image: imageId,  
-            
+            Image: imageId,
+            Categorie: categoryId, // <- bon nom de champ
           },
         }),
       });
 
       if (!res.ok) throw new Error(`Erreur HTTP : ${res.status}`);
-      navigate("/posts"); //une fois créé on est renvoyé à cette adresse
+      navigate("/posts");
 
     } catch (err) {
       setError(err.message);
@@ -116,6 +128,24 @@ function CreatePost() {
                   required
                 />
               </label>
+
+              <label className="block">
+                <span className="text-gray-700">Catégorie</span>
+                <select
+                  value={categoryId || ""}
+                  onChange={(e) => setCategoryId(e.target.value)}
+                  className="w-full border px-3 py-2 rounded"
+                  required
+                >
+                  <option value="">-- Sélectionner une catégorie --</option>
+                  {enumCategories.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
 
               <label className="block">
                 <span className="text-gray-700">Image (PNG ou JPEG)</span>
@@ -163,5 +193,6 @@ function CreatePost() {
 }
 
 export default CreatePost;
+
 
 
