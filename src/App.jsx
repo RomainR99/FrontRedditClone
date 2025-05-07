@@ -9,6 +9,7 @@ import Post from './pages/Post';
 import Subreddit from './pages/Subreddit';
 import CategoryPage from './pages/CategoryPage'; // à créer
 import Profile from './pages/Profile';
+import CommunityPage from './pages/CommunityPage';
 
 
 // Composants
@@ -26,6 +27,7 @@ function App() {
         <Route path="/create-post" element={<CreatePost />} />
         <Route path="/category/:name" element={<CategoryPage />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/community/:name" element={<CommunityPage />} />
       </Routes>
     </BrowserRouter>
   );

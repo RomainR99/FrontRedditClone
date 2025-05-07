@@ -1,24 +1,22 @@
 import React from "react";
 
-const PostCard = ({ post }) => {
-  const title = post?.attributes?.title || "Titre non disponible";
-  const imageUrl = post?.attributes?.image || ""; // Assure-toi que le champ s'appelle bien "image"
+export default function PostCard({ post }) {
+  const { title, cover } = post;
+
+  const imageUrl = cover?.url
+    ? `http://localhost:1337${cover.url}`
+    : null;
 
   return (
-    <div>
-      <h2 className="text-xl font-semibold mb-2">{title}</h2>
+    <div className="bg-zinc-800 p-4 rounded-lg">
+      <h2 className="text-xl font-bold text-white">
+        {title || "Titre non disponible"}
+      </h2>
       {imageUrl ? (
-        <img
-          src={imageUrl}
-          alt={title}
-          className="rounded-lg max-h-96 object-cover w-full"
-        />
+        <img src={imageUrl} alt={title} className="mt-2 rounded" />
       ) : (
         <p className="text-gray-400">Aucune image</p>
       )}
     </div>
   );
-};
-
-export default PostCard;
-
+}

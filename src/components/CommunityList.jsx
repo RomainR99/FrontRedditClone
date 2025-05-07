@@ -1,39 +1,36 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+// composants/CommunityList.jsx
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-const CommunityList = () => {
-  const [subreddits, setSubreddits] = useState([]);
+const communities = [
+  { name: 'culture-internet' },
+  { name: 'jeux-video' },
+  { name: 'questions-reponses' },
+  { name: 'technologie' },
+  { name: 'pop-culture' },
+  { name: 'films-series' },
+];
 
-  useEffect(() => {
-    axios.get('http://localhost:1337/api/subreddits')
-      .then((res) => {
-        setSubreddits(res.data.data || []); // sécurité si data est undefined
-      })
-      .catch((err) => {
-        console.error("Erreur lors du chargement des subreddits :", err);
-      });
-  }, []);
-
+export default function CommunityList() {
   return (
-    <div className="bg-gray-800 p-4 text-white rounded">
-      <h3 className="text-lg font-bold mb-2">Communautés</h3>
-      <ul>
-        {subreddits.map((sub) => {
-          const name = sub?.attributes?.name;
-          if (!name) return null; // éviter de crasher si name n'existe pas
-
-          return (
-            <li key={sub.id}>
-              <Link to={`/subreddit/${sub.id}`} className="text-orange-400 hover:underline">
-                r/{name}
-              </Link>
-            </li>
-          );
-        })}
+    <div>
+      <h2 className="text-white text-lg font-semibold mb-4">Communautés</h2>
+      <ul className="space-y-2">
+        {communities.map((community, index) => (
+          <li key={index} className="flex justify-between items-center">
+            <Link
+              to={`/community/${community.name}`}
+              className="text-orange-400 hover:underline"
+            >
+              r/{community.name}
+            </Link>
+            <button className="ml-2 px-2 py-0.5 bg-orange-500 text-sm text-white rounded hover:bg-orange-600">
+              Rejoindre
+            </button>
+          </li>
+        ))}
       </ul>
     </div>
   );
-};
+}
 
-export default CommunityList;
