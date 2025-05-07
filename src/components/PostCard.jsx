@@ -2,6 +2,30 @@ import { useState } from "react";
 import "../PostCard.css";
 
 function PostCard({ title, content, image }) {
+    const [likes, setLikes] = useState(0);
+    const [dislikes, setDislikes] = useState(0);
+    const [comments, setComments] = useState(0);
+    const [shared, setShared] = useState(false);
+    const [showCommentInput, setShowCommentInput] = useState(false);
+    const [newComment, setNewComment] = useState('');
+
+    const handleLike = () => setLikes((prev) => prev + 1)
+    const handleDislike = () => setDislikes((prev) => prev + 1)
+    const handleShare = () => {
+      setShared(true)
+      navigator.clipboard.writeText(window.location.href)
+      setTimeout(() => setShared(false), 2000);
+    }
+
+    const tooggleCommentInput = () => setShowCommentInput(!showCommentInput)
+    const handleCommentSubmit = (e) => {
+      e.preventDefault()
+      if (newComment.trim()) {
+        setComments((prev) => prev + 1)
+        setNewComment('')
+        setShowCommentInput(false)
+      }
+    }
   
     return (
         <div className="post-card">
@@ -23,11 +47,36 @@ function PostCard({ title, content, image }) {
               </div>
             )}
             <p className="post-content">{content}</p>
+            
             <div className="post-footer">
-              <span><i className="bi bi-hand-thumbs-up"></i> 457 <i className="bi bi-hand-thumbs-down"></i></span>
-              <span><i className="bi bi-chat"></i> 68</span>
-              <span><i className="bi bi-share"></i> Partager</span>
+              <span onClick={handleLike} style={{ cursor: 'pointer' }}>
+                <i className="bi bi-hand-thumbs-up"></i> {likes}
+              </span>
+              &nbsp;
+              <span onClick={handleDislike} style={{ cursor: 'pointer' }}>
+                <i className="bi bi-hand-thumbs-down"></i> {dislikes}
+              </span>
+              &nbsp;
+              <span onClick={tooggleCommentInput} style={{ cursor: 'pointer' }}>
+                <i className="bi bi-chat"></i> {comments}
+              </span>
+              &nbsp;
+              <span onClick={handleShare} style={{ cursor: 'pointer' }}>
+                <i className="bi bi-share"></i> {shared ? "Lien copié!" : "Partager"}
+              </span>
             </div>
+            {showCommentInput && (
+              <form onSubmit={handleCommentSubmit} className="comment-form">
+                <input 
+                  type="text"
+                  value={newComment}
+                  onChange={(e) => setNewComment(e.target.value)}
+                  placeholder="Ajouter un commentaire..."
+                />
+                <button type="submit">Envoyer</button>
+              </form>
+
+            )}
         </div>
     )
 }
