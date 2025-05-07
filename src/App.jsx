@@ -8,6 +8,7 @@ import FirstLogin from './pages/FirstLogin'; // Importer FirstLogin
 import Main from './pages/Main';
 import CreatePost from './pages/CreatePost';
 import CategoryPosts from './pages/CategoryPosts';
+import ArticleDetails from "./pages/ArticleDetails";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/main" element={<Main />} />
         <Route path="/createPost" element={<CreatePost />} />
         <Route path="/categorie/:nom" element={<CategoryPosts />} />
+        <Route path="/article/:id" element={<ArticleDetails />} />
       </Routes>
     </Router>
   );

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import "../styles/Post.css";
 import Comment from "./Comment.jsx";
+import { Link } from "react-router-dom";
 
 
 const getCurrentUserId = () => {
@@ -96,44 +97,47 @@ const Posts = () => {
   return (
     <div className="post space-y-6 px-4 py-6">
       <div className="post-header">
-        {posts.length > 0 ? (
-          posts.map((post) => {
-            return (
-              <div key={post.id} className="p-4 border border-gray-200 rounded shadow-md bg-white">
-                <button
-                  onClick={() => handleDelete(post.id)}
-                  disabled={post.user?.id !== currentUserId}
-                  className={`px-2 py-1 rounded text-white ${
-                    post.user?.id === currentUserId
-                      ? "bg-red-500 hover:bg-red-600 cursor-pointer"
-                      : "bg-gray-300 cursor-not-allowed"
-                  }`}
-                >
-                  x
-                </button> {/*le bouton est grisé si le user est =! de créateur */}
+      {posts.length > 0 ? (
+        posts.map((post) => (
+          <div
+            key={post.id}
+            className="p-4 border border-gray-200 rounded shadow-md bg-white relative"
+          >
+            {/* Supprimer */}
+            <button
+              onClick={() => handleDelete(post.id)}
+              disabled={post.user?.id !== currentUserId}
+              className={`absolute top-2 right-2 px-2 py-1 rounded text-white ${
+                post.user?.id === currentUserId
+                  ? "bg-red-500 hover:bg-red-600 cursor-pointer"
+                  : "bg-gray-300 cursor-not-allowed"
+              }`}
+              title="Supprimer"
+            >
+              ✕
+            </button>
 
-                <h2 className="text-xl font-semibold text-gray-800 mb-2">{post.Title}</h2>
-                <p className="text-gray-700 mb-4">{post.Description}</p>
-                <p className="text-gray-700 mb-4">{post.user.username}</p>
-                <p className="text-gray-700 mb-4">{post.Categorie}</p>
-                <p className="text-gray-500 text-sm mb-2">
-                  {formatDate(post.publishedAt)}
-                </p>
-                
-                {post.Image && post.Image[0] && (
-                  <img
-                    src={`http://localhost:1337${post.Image[0].formats?.thumbnail?.url || post.Image[0].url}`}
-                    alt="cover"
-                    className="w-full h-auto rounded"
-                  />
-                )}
+            {/* Lien vers les détails du post */}
+            <Link to={`/article/${post.id}`} className="block space-y-2 hover:bg-gray-50 p-2 rounded transition">
+              <h2 className="text-xl font-semibold text-gray-800">{post.Title}</h2>
+              <p className="text-gray-700">{post.Description}</p>
+              <p className="text-sm text-gray-600">Auteur : {post.user?.username}</p>
+              <p className="text-sm text-gray-600">Catégorie : {post.Categorie}</p>
+              <p className="text-sm text-gray-500">{formatDate(post.publishedAt)}</p>
 
-              </div>
-            );
-          })
-        ) : (
-          <Comment/>
-        )}
+              {post.Image && post.Image[0] && (
+                <img
+                  src={`http://localhost:1337${post.Image[0].formats?.thumbnail?.url || post.Image[0].url}`}
+                  alt="cover"
+                  className="w-full h-48 object-cover rounded mt-2"
+                />
+              )}
+            </Link>
+          </div>
+        ))
+      ) : (
+        <p>Aucun post disponible</p>
+      )}
       </div>
     </div>      
   );

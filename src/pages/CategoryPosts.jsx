@@ -63,15 +63,13 @@ const CategoryPosts = () => {
   return (
     <div className="category-posts">
       <h1 className="text-3xl font-bold mb-4">Posts dans la catégorie "{nom}"</h1>
-
+      
       {posts.length === 0 ? (
         <p>Aucun post dans cette catégorie.</p>
       ) : (
         <div className="posts-list">
           {posts.map((post) => (
             <div key={post.id} className="post-card p-4 border border-gray-300 rounded mb-6 bg-white">
-              
-
               <h2 className="text-xl font-semibold text-gray-800 mb-2">{post.Title}</h2>
                 <p className="text-gray-700 mb-4">{post.Description}</p>
                 <p className="text-gray-700 mb-4">{post.user.username}</p>
