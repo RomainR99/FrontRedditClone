@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import "../styles/Post.css";
-import Comment from "./Comment.jsx";
 import { Link } from "react-router-dom";
+import "../styles/PostCard.css";
 
 
 const getCurrentUserId = () => {
@@ -95,7 +95,7 @@ const Posts = () => {
   if (error) return <p className="text-red-500">Erreur : {error}</p>;
 
   return (
-    <div className="post space-y-6 px-4 py-6">
+    <div className="post-card">
       <div className="post-header">
       {posts.length > 0 ? (
         posts.map((post) => (
@@ -119,19 +119,24 @@ const Posts = () => {
 
             {/* Lien vers les détails du post */}
             <Link to={`/article/${post.id}`} className="block space-y-2 hover:bg-gray-50 p-2 rounded transition">
-              <h2 className="text-xl font-semibold text-gray-800">{post.Title}</h2>
+              <h2 className="post-title">{post.Title}</h2>
               <p className="text-gray-700">{post.Description}</p>
               <p className="text-sm text-gray-600">Auteur : {post.user?.username}</p>
-              <p className="text-sm text-gray-600">Catégorie : {post.Categorie}</p>
-              <p className="text-sm text-gray-500">{formatDate(post.publishedAt)}</p>
+              <p className="subreddit">Catégorie : {post.Categorie}</p>
+              <p className="time">{formatDate(post.publishedAt)}</p>
 
               {post.Image && post.Image[0] && (
                 <img
                   src={`http://localhost:1337${post.Image[0].formats?.thumbnail?.url || post.Image[0].url}`}
                   alt="cover"
-                  className="w-full h-48 object-cover rounded mt-2"
+                  className="post-image"
                 />
               )}
+              <div className="post-footer">
+              <span><i className="bi bi-arrow-up"></i> 457</span>
+              <span><i className="bi bi-chat"></i> 68</span>
+              <span><i className="bi bi-share"></i> Partager</span>
+            </div>
             </Link>
           </div>
         ))

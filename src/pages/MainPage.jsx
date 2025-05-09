@@ -21,7 +21,7 @@ function MainPage() {
             <div className="main-layout">
                 <Sidebard />
                 <div className="center-layout">
-                    <PostList searchTerm={searchTerm} />
+                    
                     <Posts searchTerm={searchTerm} />
                 </div>
                 <Suggestion />
