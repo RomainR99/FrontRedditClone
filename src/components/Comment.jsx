@@ -1,89 +1,59 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from "react";
 
 const Comment = ({ postId }) => {
-    // Déclarer un état pour les commentaires et un pour le texte du commentaire
-    const [comments, setComments] = useState([]);
-    const [newComment, setNewComment] = useState('');
+  const [newComment, setNewComment] = useState("");
 
-    // Utiliser useEffect pour appeler l'API et récupérer les commentaires
-    useEffect(() => {
-        fetch(`https://votre-api.com/posts/${postId}/comments`)
-            .then(response => response.json())
-            .then(data => {
-                setComments(data);
-            })
-            .catch(error => console.error('Erreur:', error));
-    }, [postId]);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    // Fonction pour gérer le changement dans le champ de texte
-    const handleCommentChange = (event) => {
-        setNewComment(event.target.value);
-    };
+    const token = localStorage.getItem("jwt");
+    if (!token) {
+      alert("Vous devez être connecté pour commenter.");
+      return;
+    }
 
-    // Fonction pour envoyer le commentaire à l'API
-    const handleCommentSubmit = (event) => {
-        event.preventDefault();
+    try {
+      const res = await fetch("http://localhost:1337/api/articles?populate=comments", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          data: {
+            content: newComment,
+            post: postId, // Assurez-vous que le nom de relation est bien `article`
+          },
+        }),
+      });
 
-        if (!newComment.trim()) {
-            // Ne pas envoyer si le commentaire est vide
-            return;
-        }
+      if (!res.ok) throw new Error("Erreur lors de l'envoi du commentaire");
 
-        const newCommentData = {
-            postId,       // L'ID du post auquel le commentaire appartient
-            content: newComment, // Le contenu du commentaire
-            author: "Utilisateur connecté", // Remplacez par l'auteur réel
-            date: new Date().toLocaleDateString(), // Date actuelle
-        };
+      setNewComment("");
+      window.location.reload(); // Recharge pour voir le nouveau commentaire
+    } catch (err) {
+      console.error("Erreur:", err.message);
+    }
+  };
 
-        // Envoi du commentaire à l'API
-        fetch(`https://votre-api.com/posts/${postId}/comments`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(newCommentData),
-        })
-            .then(response => response.json())
-            .then(data => {
-                // Ajouter le nouveau commentaire à l'état
-                setComments(prevComments => [data, ...prevComments]);
-                setNewComment(''); // Réinitialiser le champ de texte
-            })
-            .catch(error => console.error('Erreur:', error));
-    };
-
-    return (
-        <div className="comments">
-            <div className="comment-form">
-                <textarea
-                    value={newComment}
-                    onChange={handleCommentChange}
-                    placeholder="Écrivez un commentaire..."
-                ></textarea>
-                <button onClick={handleCommentSubmit}>Envoyer</button>
-            </div>
-
-            <div className="comment-list">
-                {comments.length > 0 ? (
-                    comments.map((comment) => (
-                        <div className="comment" key={comment.id}>
-                            <div className="comment-header">
-                                <span className="comment-author">{comment.user}</span>
-                                <span className="comment-date">{comment.date}</span>
-                            </div>
-                            <div className="comment-body">
-                                <p>{comment.content}</p>
-                            </div>
-                        </div>
-                    ))
-                ) : (
-                    <p>Aucun commentaire à afficher.</p>
-                )}
-            </div>
-        </div>
-    );
+  return (
+    <form onSubmit={handleSubmit} className="mt-4">
+      <textarea
+        value={newComment}
+        onChange={(e) => setNewComment(e.target.value)}
+        placeholder="Écrivez un commentaire..."
+        className="w-full p-2 border rounded"
+      ></textarea>
+      <button
+        type="submit"
+        className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+      >
+        Envoyer
+      </button>
+    </form>
+  );
 };
 
 export default Comment;
+
 
