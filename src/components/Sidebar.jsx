@@ -10,7 +10,7 @@ function Sidebar() {
         setCategory(category === cat ? null : cat)
     } 
     const subcategory = {
-        culture: ['Memes', 'Buzz', 'Animeaux', 'Humour', 'Satisfaisant'],
+        culture: ['Memes', 'Buzz', 'Animaux', 'Humour', 'Satisfaisant'],
         jeux: ['Action', 'Aventure', 'E-sports', 'Mobile', 'Rôle', 'Stratégie'],
         questions: ['Question/Réponse', 'Histoire/Confessions'],
         tech: ['Machine Learning', 'Informatique', 'Programmation', 'Intelligence Artificielle', 'Logiciel/Application', 'Eléctronique DIY'],

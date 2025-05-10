@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar.jsx";
 import Sidebard from "../components/Sidebar.jsx";
-import PostList from "../components/PostList.jsx";
 import "../styles/MainPage.css";
 import Suggestion from "../components/Suggestion.jsx";
 import Footer from "../components/Footer.jsx";
