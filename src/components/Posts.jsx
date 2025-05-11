@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import "../styles/PostCard.css";
 
 
+
 const getCurrentUserId = () => {
   const token = localStorage.getItem("jwt");
   if (!token) return null;
@@ -90,6 +91,8 @@ const Posts = () => {
       hour12: false, // Format 24h
     });
   };
+
+ 
 
   if (loading) return <p className="text-blue-500">Chargement des posts...</p>;
   if (error) return <p className="text-red-500">Erreur : {error}</p>;
