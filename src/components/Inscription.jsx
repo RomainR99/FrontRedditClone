@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import "../index.css";
 import Navbar from "./Navbar";
+import { Link } from "react-router-dom";
 
 function Inscription() {
     const [email, setEmail] = useState('')
@@ -51,6 +52,7 @@ function Inscription() {
                         <button type="submit" className="w-full bg-orange-500 text-white p-2 rounded hover:bg-orange-600 transition duration-200">
                             S'inscrire
                         </button>
+                        <p className="signup-redirect">Déjà inscrit ? <Link to={"/connexion"}>Se connecté</Link></p>
                     </form>
                 </div>
             </div>

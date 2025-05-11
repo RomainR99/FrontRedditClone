@@ -61,5 +61,19 @@ button:hover {
   background-color: #166fe5;
 }
 
+.signup-redirect {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #ccc;
+  text-align: center;
+}
 
+.signup-redirect a {
+  color: #4ea1f3;
+  text-decoration: none;
+}
+
+.signup-redirect a:hover {
+  text-decoration: underline;
+}
 
