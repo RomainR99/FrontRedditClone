@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import "../index.css";
+import Navbar from "./Navbar";
 
 function Inscription() {
     const [email, setEmail] = useState('')
@@ -23,34 +24,37 @@ function Inscription() {
     };
 
     return (
-        <div className="page">
-            <div className="app">
-                <form onSubmit={handleInscription} className="form">
-                    <h2>Créer un compte</h2>
-                    <input 
-                        type="email"
-                        placeholder="Email"                   
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <input 
-                        type="text"
-                        placeholder="Nom d'utilisateur"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
-                    <input 
-                        type="password"
-                        placeholder="Mot de passe"                  
-                        value={password} 
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <button type="submit" className="w-full bg-orange-500 text-white p-2 rounded hover:bg-orange-600 transition duration-200">
-                        S'inscrire
-                    </button>
-                </form>
+        <>
+            <Navbar/>
+            <div className="page">
+                <div className="app">
+                    <form onSubmit={handleInscription} className="form">
+                        <h2 className="title">Créer un compte</h2>
+                        <input 
+                            type="email"
+                            placeholder="Email"                   
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                        <input 
+                            type="text"
+                            placeholder="Nom d'utilisateur"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                        <input 
+                            type="password"
+                            placeholder="Mot de passe"                  
+                            value={password} 
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                        <button type="submit" className="w-full bg-orange-500 text-white p-2 rounded hover:bg-orange-600 transition duration-200">
+                            S'inscrire
+                        </button>
+                    </form>
+                </div>
             </div>
-        </div>
+        </>
     )
 }
 

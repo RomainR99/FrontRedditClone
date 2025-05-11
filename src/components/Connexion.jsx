@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "../Connexion.css";
+import Navbar from "./Navbar";
 
 function Connexion() {
     const [email, setEmail] = useState('')
@@ -23,33 +24,39 @@ function Connexion() {
     }
 
     return (
-        <div className="connexion-page">
-            <form onSubmit={handleConnexion} className="connexion-form">
-                <h2 >Se connecter</h2>
-                {error && (
-                    <div className="error-message">
-                        {error}
-                    </div>
-                )}
-                <input 
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)} 
-                />
-                <input 
-                    type="password"
-                    placeholder="Mot de passe"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)} 
-                />
-                <Link to={"/profile/brendan_pidoux"}>
-                    <button type="submit">
-                        Se connecter
-                    </button>
-                </Link>
-            </form>
-        </div>
+        <>
+            <Navbar/>
+            <div className="connexion-page">
+                <form onSubmit={handleConnexion} className="connexion-form">
+                    <h2 >Se connecter</h2>
+                    {error && (
+                        <div className="error-message">
+                            {error}
+                        </div>
+                    )}
+                    <input 
+                        type="email"
+                        placeholder="Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)} 
+                    />
+                    <input 
+                        type="password"
+                        placeholder="Mot de passe"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)} 
+                    />
+                    <Link to={"/profile/brendan_pidoux"}>
+                        <button type="submit">
+                            Se connecter
+                        </button>
+                    </Link>
+                    <p className="signup-redirect">
+                        Pas encore inscrit ? <Link to={"/inscription"}>Créer un compte</Link>
+                    </p>
+                </form>
+            </div>
+        </>
     )
 }
 

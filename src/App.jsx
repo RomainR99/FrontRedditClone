@@ -19,7 +19,6 @@ function App() {
         <Route path='/inscription' element={<Inscription/>}/>
       </Routes>
     </BrowserRouter>
-    
   )
 }
 //function App() {
