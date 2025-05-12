@@ -34,9 +34,11 @@ const ArticleDetails = () => {
         if (!response.ok) {
           throw new Error(`Erreur HTTP : ${response.status}`);
         }
-
+        
+        //probleme pour fetch  avec `http://localhost:1337/api/articles/${id}` come dans post donc je récpére tout et filtre vvia le usseeffect
         const data = await response.json();
-        setArticle(data.data);
+        const found = data.data.find((item) => item.id.toString() === id);
+        setArticle(found);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -75,18 +77,19 @@ const ArticleDetails = () => {
           comments.data.map((comment) => (
             <div key={comment.id} className="mb-3 p-3 bg-gray-100 rounded">
               <p className="font-semibold">
-                {comment.user?.data?.attributes?.username || "Anonyme"}
+                {comment.user?.data?.username || "Anonyme"}
               </p>
-              <p>{comment.Content}</p>
+              <p>{comment.attributes?.Markdown}</p>
             </div>
           ))
         ) : (
           <p>Aucun commentaire</p>
         )}
-      </div>
 
-      <Comment postId={id} />
-    </div>
+        {/* Afficher le formulaire dans tous les cas */}
+        <Comment postId={id} />
+      </div>
+    </div> 
   );
 };
 

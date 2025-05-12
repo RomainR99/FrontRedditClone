@@ -13,16 +13,16 @@ const Comment = ({ postId }) => {
     }
 
     try {
-      const res = await fetch("http://localhost:1337/api/articles?populate=comments", {
+      const res = await fetch("http://localhost:1337/api/comments", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           data: {
-            content: newComment,
-            post: postId, // Assurez-vous que le nom de relation est bien `article`
+            Markdown: newComment,        // Assure-toi que le champ s'appelle bien "Content"
+            article: postId,            // Ici c’est "article" si c’est le nom de la relation
           },
         }),
       });
@@ -30,7 +30,7 @@ const Comment = ({ postId }) => {
       if (!res.ok) throw new Error("Erreur lors de l'envoi du commentaire");
 
       setNewComment("");
-      window.location.reload(); // Recharge pour voir le nouveau commentaire
+      window.location.reload(); // Recharge les commentaires
     } catch (err) {
       console.error("Erreur:", err.message);
     }
@@ -55,5 +55,6 @@ const Comment = ({ postId }) => {
 };
 
 export default Comment;
+
 
 
