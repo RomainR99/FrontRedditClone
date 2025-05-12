@@ -11,10 +11,16 @@ function PostCard({ title, content, image, onDelete }) {
 
     const handleLike = () => setLikes((prev) => prev + 1)
     const handleDislike = () => setDislikes((prev) => prev + 1)
-    const handleShare = () => {
-      setShared(true)
-      navigator.clipboard.writeText(window.location.href)
-      setTimeout(() => setShared(false), 2000);
+    const handleShare = async () => {
+      const postText = `${title}\n\n${content}\n\n${image ? image : ''}`
+      try {
+        await navigator.clipboard.writeText(postText)
+        setShared(true)
+        setTimeout(() => setShared(false), 2000);
+      } catch (err) {
+        console.error('Erreur lors du partage: ', err);
+        
+      }
     }
 
     const tooggleCommentInput = () => setShowCommentInput(!showCommentInput)
