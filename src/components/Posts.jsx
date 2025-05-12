@@ -1,8 +1,6 @@
-// src/components/Posts.jsx
 import React, { useState, useEffect } from 'react';
 import "../styles/Post.css";
-import { jwt_decode } from 'jwt-decode';
-
+import { jwtDecode } from "jwt-decode";
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
@@ -20,11 +18,11 @@ const Posts = () => {
         setLoading(false);
         return;
       }
-      
+
       // Décoder le token JWT pour obtenir les informations de l'utilisateur
       try {
-        const decodedToken = jwt_decode(token); // Décodage du token
-        console.log('Token décodé:', decodedToken); // Affichage du token décodé dans la console
+        const decodedToken = jwtDecode(token);
+        console.log('Token décodé:', decodedToken);
       } catch (err) {
         console.error('Erreur lors du décodage du token:', err);
         setError('Erreur de décodage du token');
@@ -79,17 +77,16 @@ const Posts = () => {
           posts.map((post) => {
             try {
               const attrs = post?.attributes;
-              if (!attrs) return null; // ignorer les posts sans attributs
+              if (!attrs) return null;
 
               const title = attrs.title ?? "Sans titre";
               const description = attrs.description ?? "";
               const date = attrs.publishedAt || attrs.createdAt;
               const imageUrl = attrs.cover?.data?.attributes?.url;
-              
 
               return (
                 <div key={post.id} className="p-4 border border-gray-200 rounded shadow-md bg-white">
-                  <p>Auteur : {authorEmail}</p>
+                  <p>Auteur : inconnu</p>
                   <h2 className="text-xl font-semibold text-gray-800 mb-2">{title}</h2>
                   <p className="text-gray-700 mb-4">{description}</p>
                   <p className="text-gray-500 text-sm mb-2">{formatDate(date)}</p>
@@ -116,6 +113,7 @@ const Posts = () => {
 };
 
 export default Posts;
+
 
 
 

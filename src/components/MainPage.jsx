@@ -14,8 +14,8 @@ function MainPage() {
             <div className="main-layout">
                 <Sidebard/>
                 <div className="center-layout">
-                <PostList/>
-                <Posts/>
+                    <PostList/>
+                    <Posts/>
                 </div>
                 <Suggestion/>
             </div>
