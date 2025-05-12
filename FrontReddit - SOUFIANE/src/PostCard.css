@@ -157,3 +157,72 @@
     color: #d7dadc;
     font-weight: 500;
 }
+
+
+/* Style de la barre de réactions */
+.reactions-bar {
+    display: flex;
+    justify-content: flex-start;
+    gap: 16px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+  }
+  
+  /* Style pour chaque bouton de réaction */
+  .reaction-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f4f4f4;
+    color: #333;
+    border: none;
+    border-radius: 25px;
+    padding: 8px 16px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    user-select: none;
+    font-weight: bold;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Animation lors du survol de chaque réaction */
+  .reaction-btn:hover {
+    background-color: #ddd;
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Effet de focus pour améliorer l'accessibilité */
+  .reaction-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
+  }
+  
+  /* Style pour le nombre de réactions */
+  .reaction-btn span {
+    margin-left: 8px;
+    font-size: 14px;
+    font-weight: normal;
+    color: #555;
+  }
+  
+  /* Ajouter un fond personnalisé pour chaque emoji */
+  .reaction-btn:nth-child(1) { background-color: #f0f0f0; } /* 👍 */
+  .reaction-btn:nth-child(2) { background-color: #f5c6cb; } /* ❤️ */
+  .reaction-btn:nth-child(3) { background-color: #ffe066; } /* 😂 */
+  .reaction-btn:nth-child(4) { background-color: #99ccff; } /* 😮 */
+  .reaction-btn:nth-child(5) { background-color: #ffcccc; } /* 😢 */
+  .reaction-btn:nth-child(6) { background-color: #ff6666; } /* 😡 */
+  
+  /* Survol avec des couleurs de fond personnalisées pour chaque emoji */
+  .reaction-btn:nth-child(1):hover { background-color: #e0e0e0; } /* 👍 */
+  .reaction-btn:nth-child(2):hover { background-color: #f1a7b5; } /* ❤️ */
+  .reaction-btn:nth-child(3):hover { background-color: #ffd700; } /* 😂 */
+  .reaction-btn:nth-child(4):hover { background-color: #80b3ff; } /* 😮 */
+  .reaction-btn:nth-child(5):hover { background-color: #f1a7b5; } /* 😢 */
+  .reaction-btn:nth-child(6):hover { background-color: #ff4d4d; } /* 😡 */
+  

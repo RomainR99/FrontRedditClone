@@ -1,15 +1,25 @@
 import { useState, useEffect } from "react";
 import "../PostCard.css";
 
+// Liste des réactions (émoticônes)
+const REACTIONS = ['👍', '❤️', '😂', '😮', '😢', '😡'];
+
 function PostCard({ title, content, image }) {
   const postId = title.replace(/\s+/g, "-").toLowerCase(); // ID basé sur le titre
 
+  // État pour les "likes", "dislikes", commentaires, et réactions
   const [likes, setLikes] = useState(0);
   const [dislikes, setDislikes] = useState(0);
   const [shared, setShared] = useState(false);
   const [showCommentInput, setShowCommentInput] = useState(false);
   const [newComment, setNewComment] = useState('');
   const [commentList, setCommentList] = useState([]);
+  
+  // Réactions
+  const [reactions, setReactions] = useState(() => {
+    const saved = localStorage.getItem(`reactions-${postId}`);
+    return saved ? JSON.parse(saved) : {};
+  });
 
   // 🔁 Charger les commentaires à partir de localStorage
   useEffect(() => {
@@ -46,6 +56,16 @@ function PostCard({ title, content, image }) {
       setNewComment('');
       setShowCommentInput(false);
     }
+  };
+
+  // Fonction pour gérer les réactions (réaction avec emoji)
+  const handleReaction = (emoji) => {
+    const updated = {
+      ...reactions,
+      [emoji]: (reactions[emoji] || 0) + 1,
+    };
+    setReactions(updated);
+    localStorage.setItem(`reactions-${postId}`, JSON.stringify(updated));
   };
 
   return (
@@ -87,9 +107,22 @@ function PostCard({ title, content, image }) {
         </span>
       </div>
 
+      {/* Affichage des réactions */}
+      <div className="reactions-bar">
+        {REACTIONS.map((emoji) => (
+          <button
+            key={emoji}
+            className="reaction-btn"
+            onClick={() => handleReaction(emoji)}
+          >
+            {emoji} {reactions[emoji] || 0}
+          </button>
+        ))}
+      </div>
+
       {showCommentInput && (
         <form onSubmit={handleCommentSubmit} className="comment-form">
-          <input 
+          <input
             type="text"
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
