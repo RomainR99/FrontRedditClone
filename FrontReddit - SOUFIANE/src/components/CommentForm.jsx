@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import './comments.css';
 
-
 export default function CommentForm({ postId, onCommentAdded }) {
   const [content, setContent] = useState('');
 
@@ -15,23 +14,26 @@ export default function CommentForm({ postId, onCommentAdded }) {
       createdAt: new Date().toISOString(),
     };
 
-    const existing = JSON.parse(localStorage.getItem('comments')) || [];
+    const key = `comments-${postId}`;
+    const existing = JSON.parse(localStorage.getItem(key)) || [];
     const updated = [...existing, newComment];
-    localStorage.setItem('comments', JSON.stringify(updated));
+    localStorage.setItem(key, JSON.stringify(updated));
 
     setContent('');
-    onCommentAdded(); // pour recharger la liste
+    onCommentAdded(); // pour rafraîchir la liste
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="comment-form">
       <textarea
-        placeholder="Ajouter un commentaire"
+        placeholder="Ajouter un commentaire..."
         value={content}
         onChange={(e) => setContent(e.target.value)}
+        rows={3}
         required
       />
-      <button type="submit">Commenter</button>
+      <button type="submit">💬 Commenter</button>
     </form>
   );
 }
+
