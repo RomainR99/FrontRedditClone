@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import GoogleLoginButton from './GoogleLoginButton';
 import "../styles/Login.css";
 
 const Login = () => {
@@ -7,13 +8,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const token = localStorage.getItem('jwt');
-    // Redirection si besoin...
-  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,41 +36,26 @@ const Login = () => {
 
   return (
     <div className="connexion-page">
-      <div className="connexion-form">
+      <form onSubmit={handleSubmit} className="connexion-form">
         <h2>Connexion</h2>
-        <form onSubmit={handleSubmit}>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
 
-          <label>Mot de passe:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+        <label>Email:</label>
+        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
 
-          {error && <p className="error">{error}</p>}
+        <label>Mot de passe:</label>
+        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
 
-          <button type="submit" disabled={loading}>
-            {loading ? "Connexion..." : "Se connecter"}
-          </button>
-        </form>
+        {error && <p className="error">{error}</p>}
 
-        <div className="mt-4">
-          <button onClick={() => navigate('/first-login')}>
-            FirstLogin
-          </button>
-        </div>
-      </div>
+        <button type="submit">{loading ? 'Connexion...' : 'Se connecter'}</button>
+
+        {/* 🔽 Ajoute ton bouton Google ici */}
+        <GoogleLoginButton />
+      </form>
     </div>
   );
 };
 
 export default Login;
+
 
