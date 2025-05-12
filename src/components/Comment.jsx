@@ -93,7 +93,7 @@ const Comment = ({ postId }) => {
         <textarea
           value={commentText}
           onChange={(e) => setCommentText(e.target.value)}
-          placeholder="Écrivez un commentaire..."
+          placeholder="Écrivez un commentaire...Pour accéder au commentaire"
           className="w-full p-2 border rounded"
           rows={3}
         ></textarea>
