@@ -42,10 +42,11 @@ const ArticleDetails = () => {
         const articleDocumentId = found.documentId?.trim().toLowerCase();
         console.log("Article documentId :", articleDocumentId);
 
-        // 2. Récupérer tous les commentaires (sans user pour l’instant)
+        // Récupérer tous les commentaires avec utilisateurs
         const comRes = await fetch("http://localhost:1337/api/comments?populate=*", {
           headers: { Authorization: `Bearer ${token}` },
         });
+        
 
         const comData = await comRes.json();
         console.log("Tous les commentaires :", comData.data);
@@ -102,18 +103,24 @@ const ArticleDetails = () => {
       <div className="mt-6">
         <h3 className="text-xl font-semibold mb-2">Commentaires</h3>
         {comments.length > 0 ? (
-          comments.map((comment) => (
-            <div key={comment.id} className="mb-3 p-3 bg-gray-100 rounded">
-              <p className="font-semibold">Anonyme</p>
-              <p>{comment.Markdown || comment.Content}</p>
-            </div>
-          ))
+          comments.map((comment) => {
+            const { Markdown, Content, user } = comment.attributes || {};
+            const username = user?.data?.username || "Anonyme";
+
+            return (
+              <div key={comment.id} className="mb-3 p-3 bg-gray-100 rounded">
+                <p className="font-semibold">{username}</p>
+                <p>{Markdown || Content}</p>
+              </div>
+            );
+          })
         ) : (
           <p>Aucun commentaire</p>
         )}
 
         <Comment postId={article.id} />
       </div>
+
     </div>
   );
 };

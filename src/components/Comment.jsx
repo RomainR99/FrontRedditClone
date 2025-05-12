@@ -1,48 +1,76 @@
 import React, { useState } from "react";
 
-const Comment = ({ postId }) => {
-  const [newComment, setNewComment] = useState("");
+const getCurrentUserId = () => {
+  const token = localStorage.getItem("jwt");
+  if (!token) return null;
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload.id;
+  } catch (error) {
+    console.error("Erreur lors du décodage du token :", error);
+    return null;
+  }
+};
 
-  const handleSubmit = async (e) => {
+const Comment = ({ postId, setPosts }) => {
+  const [commentText, setCommentText] = useState("");
+
+  const handleCommentSubmit = async (e) => {
     e.preventDefault();
-
+    if (!commentText.trim()) return;
+  
     const token = localStorage.getItem("jwt");
-    if (!token) {
+    const userId = getCurrentUserId(); // ta fonction de décodage du JWT
+  
+    if (!token || !userId) {
       alert("Vous devez être connecté pour commenter.");
       return;
     }
-
+  
+    const commentData = {
+      data: {
+        Content: commentText, // ou Markdown: commentText si tu préfères
+        article: postId,
+        user: userId
+      }
+    };
+  
     try {
       const res = await fetch("http://localhost:1337/api/comments", {
         method: "POST",
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({
-          data: {
-            Markdown: newComment,        // Assure-toi que le champ s'appelle bien "Content"
-            article: postId,            // Ici c’est "article" si c’est le nom de la relation
-          },
-        }),
+        body: JSON.stringify(commentData),
       });
-
-      if (!res.ok) throw new Error("Erreur lors de l'envoi du commentaire");
-
-      setNewComment("");
-      window.location.reload(); // Recharge les commentaires
+  
+      const result = await res.json();
+  
+      if (!res.ok) {
+        console.error("Erreur API complète :", JSON.stringify(result, null, 2));
+        throw new Error(result.error?.message || "Erreur serveur");
+      }
+  
+      console.log("Commentaire ajouté :", result.data);
+      setCommentText("");
+      // Tu peux aussi recharger les commentaires ici si nécessaire
+  
     } catch (err) {
-      console.error("Erreur:", err.message);
+      console.error("Erreur lors de l'envoi du commentaire :", err.message);
+      alert(err.message);
     }
   };
+  
 
   return (
-    <form onSubmit={handleSubmit} className="mt-4">
+    <form onSubmit={handleCommentSubmit} className="mt-4">
       <textarea
-        value={newComment}
-        onChange={(e) => setNewComment(e.target.value)}
+        value={commentText}
+        onChange={(e) => setCommentText(e.target.value)}
         placeholder="Écrivez un commentaire..."
         className="w-full p-2 border rounded"
+        rows={3}
       ></textarea>
       <button
         type="submit"
@@ -55,6 +83,8 @@ const Comment = ({ postId }) => {
 };
 
 export default Comment;
+
+
 
 
 
