@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import '../styles/CategoryPosts.css'
 
 const CategoryPosts = () => {
   const { nom } = useParams();
@@ -62,30 +63,27 @@ const CategoryPosts = () => {
 
   return (
     <div className="category-posts">
-      <h1 className="text-3xl font-bold mb-4">Posts dans la catégorie "{nom}"</h1>
+      <h1 className="category-title">Posts dans la catégorie "{nom}"</h1>
       
       {posts.length === 0 ? (
-        <p>Aucun post dans cette catégorie.</p>
+        <p className="no-posts">Aucun post dans cette catégorie.</p>
       ) : (
         <div className="posts-list">
           {posts.map((post) => (
-            <div key={post.id} className="post-card p-4 border border-gray-300 rounded mb-6 bg-white">
-              <h2 className="text-xl font-semibold text-gray-800 mb-2">{post.Title}</h2>
-                <p className="text-gray-700 mb-4">{post.Description}</p>
-                <p className="text-gray-700 mb-4">{post.user.username}</p>
-                <p className="text-gray-700 mb-4">{post.Categorie}</p>
-                <p className="text-gray-500 text-sm mb-2">
-                  {formatDate(post.publishedAt)}
-                </p>
-                
-                {post.Image && post.Image[0] && (
-                  <img
-                    src={`http://localhost:1337${post.Image[0].formats?.thumbnail?.url || post.Image[0].url}`}
-                    alt="cover"
-                    className="w-full h-auto rounded"
-                  />
-                )}
-              
+            <div key={post.id} className="post-card">
+              <h2>{post.Title}</h2>
+              <p>{post.Description}</p>
+              <p>Auteur : {post.user.username}</p>
+              <p>Catégorie : {post.Categorie}</p>
+              <p className="post-date">{formatDate(post.publishedAt)}</p>
+
+              {post.Image && post.Image[0] && (
+                <img
+                  src={`http://localhost:1337${post.Image[0].formats?.medium?.url || post.Image[0].url}`}
+                  alt="cover"
+                  className="post-image"
+                />
+              )}
             </div>
           ))}
         </div>

@@ -104,7 +104,7 @@ const Posts = () => {
         posts.map((post) => (
           <div
             key={post.id}
-            className="p-4 border border-gray-200 rounded shadow-md bg-white relative"
+            className="post-card-item"
           >
             {/* Supprimer */}
             <button
@@ -130,7 +130,7 @@ const Posts = () => {
 
               {post.Image && post.Image[0] && (
                 <img
-                  src={`http://localhost:1337${post.Image[0].formats?.thumbnail?.url || post.Image[0].url}`}
+                  src={`http://localhost:1337${post.Image[0].formats?.large?.url || post.Image[0].url}`}
                   alt="cover"
                   className="post-image"
                 />

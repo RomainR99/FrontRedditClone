@@ -1,33 +1,15 @@
-.post {
-    background-color: #1e1e1e;
-    color: #e4e4e4;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-    width: 100%;
-    min-height: 380px;
-}
   
 .post-header {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
+    flex-direction: column; /* ← Met les posts en colonne */
+    gap: 20px; /* ← Ajoute de l'espace entre les posts */
+  }
+  
   
 .avatar {
     border-radius: 50%;
     width: 40px;
     height: 40px;
-}
-  
-.meta {
-    flex: 1;
-    margin-left: 10px;
-    display: flex;
-    gap: 6px;
-    align-items: center;
-    font-size: 14px;
-    color: #aaa;
 }
   
 .dot {
@@ -64,13 +46,19 @@
     margin-bottom: 10px;
 }
   
-.post-footer {
+
+.post-card {
     display: flex;
-    gap: 20px;
-    font-size: 14px;
-    color: #ccc;
-}
+    justify-content: center;
+    padding: 40px 20px;
+  }
+
+  .post-card-item {
+    background-color: #2a2a2a; /* gris foncé distinct du fond global */
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #444; /* bordure subtile */
+
+    transition: background-color 0.3s;
+  }
   
-.post-footer i {
-    margin-right: 6px;
-}

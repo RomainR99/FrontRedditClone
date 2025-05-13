@@ -56,3 +56,8 @@ button {
 button:hover {
   background-color: #166fe5;
 }
+#root {
+  color: white;
+  background-color: black;
+}
+
