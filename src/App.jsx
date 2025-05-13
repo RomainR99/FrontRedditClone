@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import Navbar from './components/Navbar';
+import Categories from './components/Categories'; // Importer le composant Categories
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -24,6 +25,12 @@ const App = () => {
               <Route path="/r/:subreddit" element={<Subreddit />} />
               <Route path="/r/:subreddit/:postId" element={<Post />} />
               <Route path="/create-post" element={<CreatePost />} />
+              
+              {/* Ajout de la route pour les catégories */}
+              <Route path="/categories" element={<Categories />} />
+
+              {/* Route dynamique pour afficher la page d'une catégorie spécifique */}
+              
             </Routes>
           </main>
         </div>
@@ -32,4 +39,4 @@ const App = () => {
   );
 };
 
-export default App; 
+export default App;

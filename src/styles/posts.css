@@ -5,6 +5,8 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 1rem;
+  width: 100%;
+  align-items: center;
 }
 
 .post-card {
@@ -14,6 +16,8 @@
   border: 1px solid var(--reddit-gray);
   overflow: hidden;
   margin-bottom: 1rem;
+  width: 100%;
+  max-width: 800px;
 }
 
 .post-votes {

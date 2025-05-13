@@ -1,5 +1,5 @@
 .navbar {
-  background-color: white;
+  background-color: rgb(21, 20, 20);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
@@ -76,3 +76,81 @@
     text-align: center;
   }
 } 
+.notif-icon {
+  width: 24px;
+  height: 24px;
+  color: #555;
+  transition: color 0.2s ease;
+}
+
+.notif-icon.has-notif {
+  color: red;
+}
+
+.notif-button {
+  background: none;
+  border: none;
+  position: relative;
+  cursor: pointer;
+}
+
+.notif-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: red;
+  color: white;
+  font-size: 10px;
+  border-radius: 50%;
+  padding: 2px 6px;
+}
+.create-post {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.create-post form div {
+  margin-bottom: 1rem;
+}
+
+.create-post label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.create-post input,
+.create-post textarea {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+.create-post button {
+  background-color: #ff4500;
+  color: white;
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.navbar-search-form {
+  margin-left: 20px;
+}
+
+.navbar-search-input {
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  outline: none;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.navbar-search-input:focus {
+  border-color: #ff4500;
+  box-shadow: 0 0 0 2px rgba(255, 69, 0, 0.2);
+}

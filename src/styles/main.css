@@ -16,15 +16,18 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  background-color: var(--reddit-light);
+  background-color: black;
   color: var(--reddit-dark);
   line-height: 1.5;
+
 }
 
 .app {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .main-content {
@@ -33,6 +36,21 @@ body {
   margin: 0 auto;
   padding: 2rem 1rem;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 64px); /* Soustrait la hauteur de la navbar */
 }
 
 /* Import des autres fichiers CSS */

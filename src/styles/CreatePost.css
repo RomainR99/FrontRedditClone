@@ -1,0 +1,51 @@
+.create-post {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.create-post h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.create-post form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.create-post label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.create-post input,
+.create-post textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 100%;
+  font-size: 14px;
+  resize: vertical;
+}
+
+.create-post button {
+  padding: 10px;
+  background-color: #ff4500; /* Reddit orange */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.create-post button:hover {
+  background-color: #e03d00;
+}

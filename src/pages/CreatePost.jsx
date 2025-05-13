@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import axios from 'axios';
+import '../styles/CreatePost.css'; 
 
 const CreatePost = () => {
   const [title, setTitle] = useState('');
@@ -9,105 +9,90 @@ const CreatePost = () => {
   const [subreddit, setSubreddit] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user } = useAuth(); // Assure-toi que `user` contient l'id
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!title.trim() || !content.trim() || !subreddit.trim()) {
-      setError('Veuillez remplir tous les champs');
+
+    if (!title || !content || !subreddit) {
+      setError('Tous les champs sont obligatoires.');
       return;
     }
 
     try {
-      await axios.post(
-        'http://localhost:1337/api/posts',
-        {
-          title,
-          content,
-          subreddit,
-          author: user?.id,
+      const token = localStorage.getItem('token');
+      const response = await fetch('http://localhost:1337/api/posts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
+        body: JSON.stringify({
+          data: {
+            title,
+            content,
+            subreddit,
+            author: user?.id,
           },
-        }
-      );
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Erreur lors de la création du post.');
+      }
+
+      const data = await response.json();
+      console.log('Post créé :', data);
       navigate(`/r/${subreddit}`);
-    } catch (error) {
-      setError('Erreur lors de la création du post');
+    } catch (err) {
+      setError('Une erreur est survenue lors de la publication.');
+      console.error(err);
     }
   };
 
   return (
-    <div className="max-w-2xl mx-auto mt-8">
-      <h1 className="text-2xl font-bold mb-6">Créer un nouveau post</h1>
+    <div className="create-post-container">
+      <h1>Créer un nouveau post</h1>
 
-      {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-          {error}
-        </div>
-      )}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="subreddit" className="block text-sm font-medium text-gray-700">
-            Subreddit
-          </label>
-          <div className="mt-1 flex rounded-md shadow-sm">
-            <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500">
-              r/
-            </span>
-            <input
-              type="text"
-              id="subreddit"
-              value={subreddit}
-              onChange={(e) => setSubreddit(e.target.value)}
-              className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md border-gray-300 focus:outline-none focus:ring-reddit-orange focus:border-reddit-orange"
-              placeholder="nom_du_subreddit"
-            />
-          </div>
-        </div>
-
-        <div>
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700">
-            Titre
-          </label>
+          <label>Titre</label>
           <input
             type="text"
-            id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-reddit-orange focus:ring-reddit-orange"
             placeholder="Titre du post"
+            required
           />
         </div>
 
         <div>
-          <label htmlFor="content" className="block text-sm font-medium text-gray-700">
-            Contenu
-          </label>
+          <label>Contenu</label>
           <textarea
-            id="content"
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            rows={6}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-reddit-orange focus:ring-reddit-orange"
             placeholder="Contenu du post"
+            required
           />
         </div>
 
-        <div className="flex justify-end">
-          <button
-            type="submit"
-            className="bg-reddit-orange text-white px-4 py-2 rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-reddit-orange focus:ring-offset-2"
-          >
-            Publier
-          </button>
+        <div>
+          <label>Nom du Subreddit</label>
+          <input
+            type="text"
+            value={subreddit}
+            onChange={(e) => setSubreddit(e.target.value)}
+            placeholder="ex: programmation"
+            required
+          />
         </div>
+
+        <button type="submit">Publier</button>
       </form>
     </div>
   );
 };
 
-export default CreatePost; 
+export default CreatePost;

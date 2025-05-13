@@ -9,22 +9,25 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
+    console.log('Token dans le useEffect:', token); // Débogage
     if (token) {
-      // Vérifier la validité du token et récupérer les informations utilisateur
-      checkAuth();
+      // Si un token existe, on vérifie sa validité et on charge l'utilisateur
+      checkAuth(token);
     }
   }, []);
 
-  const checkAuth = async () => {
+  const checkAuth = async (token) => {
     try {
       const response = await axios.get('http://localhost:1337/users/me', {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${token}`,
         },
       });
+      console.log('Utilisateur récupéré:', response.data); // Débogage
       setUser(response.data);
       setIsAuthenticated(true);
     } catch (error) {
+      console.error('Erreur d\'authentification:', error); // Débogage
       localStorage.removeItem('token');
       setUser(null);
       setIsAuthenticated(false);
@@ -79,4 +82,4 @@ export const useAuth = () => {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
-}; 
+};
