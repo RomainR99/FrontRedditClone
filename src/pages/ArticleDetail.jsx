@@ -92,13 +92,14 @@ const ArticleDetails = () => {
       <p className="subreddit">Catégorie : {Categorie}</p>
       <p className="text-sm text-gray-500">{formatDate(publishedAt)}</p>
 
-      {Image?.data && (
+      {article.Image && article.Image[0] && (
         <img
-          src={`http://localhost:1337${Image.data.formats?.thumbnail?.url || Image.data.url}`}
+          src={`http://localhost:1337${article.Image[0].formats?.large?.url || article.Image[0].url}`}
           alt="cover"
           className="w-full h-48 object-cover rounded mt-2"
         />
       )}
+
 
       <div className="mt-6">
         <h3 className="text-xl font-semibold mb-2">Commentaires</h3>
