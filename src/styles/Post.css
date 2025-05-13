@@ -51,5 +51,12 @@
     gap: 20px;
   }
   
+  /* Centre l'image horizontalement dans le post */
+  .post-card-item img {
+    display: block;
+    margin: 0 auto;
+  }
+  
+  
   
   
