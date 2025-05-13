@@ -17,6 +17,7 @@ function MainPage() {
     return (
         <>
             <Navbar onSearch={handleSearch} />
+            
             <div className="main-layout">
                 <Sidebard />
                 <div className="center-layout">
@@ -25,6 +26,7 @@ function MainPage() {
                 </div>
                 <Suggestion />
             </div>
+        
             <Footer />
         </>
     );

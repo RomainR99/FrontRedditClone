@@ -1,6 +1,8 @@
 // src/components/FirstLogin.jsx
 import React, { useState } from 'react';
 import "../styles/FirstLogin.css";
+import { Link } from 'react-router-dom';
+
 
 const FirstLogin = () => {
   const [prenom, setPrenom] = useState('');
@@ -48,64 +50,74 @@ const FirstLogin = () => {
       setLoading(false);
     }
   };
+ 
 
   return (
-    <div className="firstlogin-page">
+    
+        <div className="firstlogin-page">
       <div className="firstlogin-form">
         <h2>Première connexion</h2>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>Prénom :</label>
-            <input
-              type="text"
-              value={prenom}
-              onChange={(e) => setPrenom(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <label>Nom :</label>
-            <input
-              type="text"
-              value={nom}
-              onChange={(e) => setNom(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <label>Email :</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <label>Mot de passe :</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <label>Confirmation du mot de passe :</label>
-            <input
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-            />
-          </div>
-          {error && <p className="error-message">{error}</p>}
-          <button type="submit" disabled={loading}>
-            {loading ? 'Création du compte...' : 'Créer mon compte'}
-          </button>
-        </form>
+
+        <div className="form-container">
+          <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+            <div>
+              <input
+                type="text"
+                placeholder="Prénom"
+                value={prenom}
+                onChange={(e) => setPrenom(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <input
+                type="text"
+                placeholder="Nom"
+                value={nom}
+                onChange={(e) => setNom(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <input
+                type="password"
+                placeholder="Mot de passe"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <input
+                type="password"
+                placeholder="Confirmation du mot de passe"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
+            </div>
+            {error && <p className="error-message">{error}</p>}
+            <button type="submit" disabled={loading}>
+              {loading ? "Création du compte..." : "Créer mon compte"}
+            </button>
+            <p className="signup-redirect">
+              Déjà inscrit ? <Link to="/login">Se connecter</Link>
+            </p>
+          </form>
+        </div>
       </div>
     </div>
+
+    
   );  
 };
 

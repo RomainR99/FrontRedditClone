@@ -3,25 +3,28 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #f0f2f5;
+    background-color: black;;
     font-family: Arial, sans-serif;
   }
   
   .firstlogin-form {
-    background-color: white;
+    background-color:#1e1e1e;
+    color : white;
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    width: 400px;
+    box-shadow: 0px 10px rgba(0, 0, 0, 0.1);
+    width: 100%; /* occupe toute la largeur */
+    max-width: 600px; /* limite la largeur sur grands écrans */
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
   }
+  
   
   .firstlogin-form h2 {
     text-align: center;
     font-size: 24px;
-    color: #1c1e21;
+    color: #ffffff;
     margin-bottom: 10px;
   }
   
@@ -35,7 +38,7 @@
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
-    background-color: #f5f6f7;
+    background-color: #ffffff;
     border-radius: 5px;
     font-size: 14px;
   }
@@ -48,7 +51,7 @@
   .firstlogin-form button {
     padding: 10px;
     background-color: #1877f2;
-    color: white;
+    color: rgb(255, 255, 255);
     border: none;
     border-radius: 5px;
     font-size: 16px;
@@ -68,4 +71,24 @@
     font-size: 14px;
     text-align: center;
   }
+  .form-container {
+    width: 100%;
+    padding: 0 15px;
+    box-sizing: border-box;
+  }
+  .signup-redirect a {
+    color: rgb(255, 255, 255); /* ou une autre couleur */
+    text-decoration: none;
+  }
+  
+  .signup-redirect a:visited {
+    color: rgb(200, 200, 200);
+  }
+  
+  .signup-redirect a:hover {
+    color: #ddd; /* couleur au survol */
+  }
+  
+  
+  
   
