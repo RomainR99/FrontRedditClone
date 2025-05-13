@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Comment from "../components/Comment";
 import "../styles/ArticleDetail.css"
+import Navbar from "../components/Navbar";
+import Sidebar from "../components/Sidebar";
+import Footer from "../components/Footer";
+
 
 const formatDate = (dateStr) => {
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -86,53 +90,56 @@ const ArticleDetails = () => {
   const { Title, Description, Categorie, publishedAt, user, Image } = article;
 
   return (
-    <div className="max-w-3xl mx-auto p-4 bg-white rounded shadow">
-      <h2 className="text-2xl font-bold text-gray-800 mb-2">{Title}</h2>
-      <p className="text-gray-700 mb-2">{Description}</p>
-      <p className="text-sm text-gray-600">Auteur : {user?.username}</p>
-      <p className="subreddit">Catégorie : {Categorie}</p>
-      <p className="text-sm text-gray-500">{formatDate(publishedAt)}</p>
-
-      {article.Image && article.Image[0] && (
-        <div className="image-container">
-        <img
-          src={`http://localhost:1337${article.Image[0].formats?.large?.url || article.Image[0].url}`}
-          alt="cover"
-          className="w-full h-48 object-cover rounded mt-2"
-        />
+    <div className="article-details">
+      <Navbar /> 
+  
+      <div className="main-content">
+        <Sidebar /> 
+        <div className="content-area">
+        <div className="article-header">
+          <h2 className="font-bold">{Title}</h2>
+          <p>{Description}</p>
+          <p>Auteur : {user?.username}</p>
+          <p>Catégorie : {Categorie}</p>
+          <p>{formatDate(publishedAt)}</p>
         </div>
-      )}
-
-
-      <div className="mt-6">
-        <h3 className="text-xl font-semibold mb-2">Commentaires</h3>
-        {comments.length > 0 ? (
-          comments.map((comment) => {
-            const { Markdown, Content, user } = comment.attributes || {};
-            const username = user?.data?.username || "Anonyme";
-
-            return (
-              <div key={comment.id} className="mb-3 p-3 bg-gray-100 rounded">
-                <p className="font-semibold">{username}</p>
-                <p>{Markdown || Content}</p>
+  
+            {article.Image && article.Image[0] && (
+              <div className="image-container">
+                <img
+                  src={`http://localhost:1337${article.Image[0].formats?.large?.url || article.Image[0].url}`}
+                  alt="cover"
+                  className="w-full h-48 object-cover rounded mt-2"
+                />
               </div>
-            );
-          })
-        ) : (
-          <p>Aucun commentaire</p>
-        )}
-
-        <Comment postId={article.id} />
-      </div>
-
+            )}
+  
+            <div className="mt-6">
+              <h3 className="text-xl font-semibold mb-2">Commentaires</h3>
+              {comments.length > 0 ? (
+                comments.map((comment) => {
+                  const { Markdown, Content, user } = comment.attributes || {};
+                  const username = user?.data?.username || "Anonyme";
+  
+                  return (
+                    <div key={comment.id} className="mb-3 p-3 bg-gray-100 rounded">
+                      <p className="font-semibold">{username}</p>
+                      <p>{Markdown || Content}</p>
+                    </div>
+                  );
+                })
+              ) : (
+                <p>Aucun commentaire</p>
+              )}
+  
+              <Comment postId={article.id} />
+            </div>
+          </div>
+        </div>
+  
+      <Footer /> 
     </div>
   );
 };
 
 export default ArticleDetails;
-
-
-
-
-
-

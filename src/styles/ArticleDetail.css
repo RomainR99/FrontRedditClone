@@ -1,6 +1,47 @@
 .image-container {
     display: flex;
-    justify-content: center; /* Centre horizontalement */
-    align-items: center; /* Centre verticalement */
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
   }
+  
+  .article-details {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .main-content {
+    display: flex;
+    flex: 1;
+  }
+  
+  .sidebar {
+    width: 250px; /* ou ta largeur actuelle */
+  }
+  
+  .content-area {
+    flex: 1;
+    padding: 20px;
+    background-color: #303030; /* optionnel */
+  }
+  
+  /* ✅ Nouveau bloc pour aligner les infos horizontalement */
+  .article-header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    background-color: #7d7d7d;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .article-header p,
+  .article-header h2 {
+    margin: 0;
+    font-size: 1rem;
+    color: #333;
+  }
+  
   

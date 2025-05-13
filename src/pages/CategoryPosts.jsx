@@ -63,17 +63,17 @@ const CategoryPosts = () => {
 
   return (
     <div className="category-posts">
-      <h1 className="category-title" style={{ color: 'white' }}>Posts dans la catégorie "{nom}"</h1>
+      <h1 className="category-title" >Posts dans la catégorie "{nom}"</h1>
       
       {posts.length === 0 ? (
-        <p className="no-posts" style={{ color: 'white' }}>Aucun post dans cette catégorie.</p>
+        <p className="no-posts" >Aucun post dans cette catégorie.</p>
       ) : (
         <div className="posts-list">
           {posts.map((post) => (
             <div key={post.id} className="post-card">
               <h2>{post.Title}</h2>
               <p>{post.Description}</p>
-              <p>Auteur : {post.user.username}</p>
+              <p className="text-sm text-gray-600">Auteur : {post.user?.username}</p>
               <p>Catégorie : {post.Categorie}</p>
               <p className="post-date">{formatDate(post.publishedAt)}</p>
 
