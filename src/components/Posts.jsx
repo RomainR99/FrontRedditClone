@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import "../styles/Post.css";
 import { Link } from "react-router-dom";
-import "../styles/PostCard.css";
+
 
 
 
@@ -100,55 +100,56 @@ const Posts = () => {
   return (
     <div className="post-card">
       <div className="post-header">
-      {posts.length > 0 ? (
-        posts.map((post) => (
-          <div
-            key={post.id}
-            className="post-card-item"
-          >
-            {/* Supprimer */}
-            <button
-              onClick={() => handleDelete(post.id)}
-              disabled={post.user?.id !== currentUserId}
-              className={`absolute top-2 right-2 px-2 py-1 rounded text-white ${
-                post.user?.id === currentUserId
-                  ? "bg-red-500 hover:bg-red-600 cursor-pointer"
-                  : "bg-gray-300 cursor-not-allowed"
-              }`}
-              title="Supprimer"
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <div
+              key={post.id}
+              className="post-card-item"
             >
-              ✕
-            </button>
-
-            {/* Lien vers les détails du post */}
-            <Link to={`/article/${post.id}`} className="block space-y-2 hover:bg-gray-50 p-2 rounded transition">
-              <h2 className="post-title">{post.Title}</h2>
-              <p className="text-gray-700">{post.Description}</p>
-              <p className="text-sm text-gray-600">Auteur : {post.user?.username}</p>
-              <p className="subreddit">Catégorie : {post.Categorie}</p>
-              <p className="time">{formatDate(post.publishedAt)}</p>
-
-              {post.Image && post.Image[0] && (
-                <img
-                  src={`http://localhost:1337${post.Image[0].formats?.large?.url || post.Image[0].url}`}
-                  alt="cover"
-                  className="post-image"
-                />
-              )}
-              <div className="post-footer">
-              <span><i className="bi bi-arrow-up"></i> 457</span>
-              <span><i className="bi bi-chat"></i> 68</span>
-              <span><i className="bi bi-share"></i> Partager</span>
+              {/* Supprimer */}
+              <button
+                onClick={() => handleDelete(post.id)}
+                disabled={post.user?.id !== currentUserId}
+                className={`absolute top-2 right-2 px-2 py-1 rounded text-white ${
+                  post.user?.id === currentUserId
+                    ? "bg-red-500 hover:bg-red-600 cursor-pointer"
+                    : "bg-gray-300 cursor-not-allowed"
+                }`}
+                title="Supprimer"
+              >
+                ✕
+              </button>
+  
+              {/* Lien vers les détails du post */}
+              <Link to={`/article/${post.id}`} >
+                <h2 className="post-title">{post.Title}</h2>
+                <p className="text-gray-700">{post.Description}</p>
+                <p className="text-sm text-gray-600">Auteur : {post.user?.username}</p>
+                <p className="subreddit">Catégorie : {post.Categorie}</p>
+                <p className="time">{formatDate(post.publishedAt)}</p>
+  
+                {post.Image && post.Image[0] && (
+                  <img
+                    src={`http://localhost:1337${post.Image[0].formats?.medium?.url || post.Image[0].url}`}
+                    alt="cover"
+                    className="post-image"
+                  />
+                )}
+                <div className="post-footer">
+                  <span><i className="bi bi-arrow-up"></i> 457</span>
+                  <span><i className="bi bi-chat"></i> 68</span>
+                  <span><i className="bi bi-share"></i> Partager</span>
+                </div>
+              </Link>
             </div>
-            </Link>
-          </div>
-        ))
-      ) : (
-        <p>Aucun post disponible</p>
-      )}
+          ))
+        ) : (
+          <p>Aucun post disponible</p>
+        )}
       </div>
     </div>      
   );
+  
 };
 
 export default Posts;

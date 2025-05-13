@@ -1,64 +1,55 @@
-  
-.post-header {
+.post-card {
     display: flex;
-    flex-direction: column; /* ← Met les posts en colonne */
-    gap: 20px; /* ← Ajoute de l'espace entre les posts */
+    justify-content: center;
+    padding: 40px 20px;
+    width: 100%; /* Prendre toute la largeur */
   }
   
-  
-.avatar {
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-}
-  
-.dot {
-    font-weight: bold;
-}
-  
-.join-btn {
-    background-color: #4ea1f3;
-    border: none;
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 13px;
-    cursor: pointer;
-    color: white;
+  .post-card-item {
+    background-color: #2a2a2a; /* Gris foncé */
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #444; /* Bordure gris foncé (pas bleue) */
+    width: 100%; /* Prendre toute la largeur possible */
+    max-width: 1200px; /* Limite de la largeur des posts (optionnel) */
     transition: background-color 0.3s;
-}
+  }
   
-.join-btn:hover {
-    background-color: #3189d6;
-}
-  
-.post-title {
+  .post-title {
     font-size: 18px;
     margin: 15px 0;
     font-weight: bold;
-    color: #fff;
-}
+    color: #fff; /* Texte en blanc */
+  }
   
-.post-image img {
+  .post-image img {
     width: 100%;
     max-height: 400px;
     object-fit: cover;
     border-radius: 8px;
     margin-bottom: 10px;
-}
+  }
   
-
-.post-card {
+  .post-footer {
     display: flex;
-    justify-content: center;
-    padding: 40px 20px;
+    justify-content: space-between;
+    margin-top: 10px;
+    color: #fff;
   }
-
-  .post-card-item {
-    background-color: #2a2a2a; /* gris foncé distinct du fond global */
-    padding: 20px;
-    border-radius: 10px;
-    border: 1px solid #444; /* bordure subtile */
-
-    transition: background-color 0.3s;
+  
+  .post-footer span {
+    font-size: 14px;
   }
+  
+  .post-footer i {
+    margin-right: 5px;
+  }
+  
+  .post-header {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  
   

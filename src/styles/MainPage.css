@@ -1,6 +1,6 @@
 .main-layout {
     display: flex;
-    padding: 20px 40px;
+    padding: 20px 20px;
     gap: 30px;
     background-color: #0f0f0f;
     min-height: 100vh;
@@ -8,7 +8,10 @@
 }
 
 .center-layout {
-  flex: 1;
   display: flex;
   justify-content: center;
+  align-items: center; /* Centrage vertical dans la div */
+  width: 100%; /* Prend toute la largeur */
+  transform: translate(-24px, -38px); /*  Décale vers gauche et  haut */
 }
+

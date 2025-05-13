@@ -101,7 +101,7 @@ function CreatePost() {
       <Navbar />
       <div className="main-layout">
         <Sidebar />
-        <div className="center-layout p-6">
+        <div className="center-layout">
           <div className="max-w-xl mx-auto bg-white shadow rounded p-6">
             <h1 className="text-2xl font-bold mb-4">Créer un post</h1>
 
