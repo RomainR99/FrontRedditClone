@@ -110,15 +110,16 @@ const Posts = () => {
               <button
                 onClick={() => handleDelete(post.id)}
                 disabled={post.user?.id !== currentUserId}
-                className={`absolute top-2 right-2 px-2 py-1 rounded text-white ${
+                className={`absolute top-2 right-2 px-2 py-1 rounded text-red-500 border-2 border-red-500 hover:bg-red-500 hover:text-white flex items-center gap-1 ${
                   post.user?.id === currentUserId
-                    ? "bg-red-500 hover:bg-red-600 cursor-pointer"
-                    : "bg-gray-300 cursor-not-allowed"
+                    ? "cursor-pointer"
+                    : "cursor-not-allowed"
                 }`}
+                style={{ backgroundColor: "transparent", color: '#f87171' }}
                 title="Supprimer"
               >
-                ✕
-              </button>
+                <i className="bi bi-trash"></i> Supprimer
+            </button>
   
               {/* Lien vers les détails du post */}
               <Link to={`/article/${post.id}`} >
@@ -130,13 +131,14 @@ const Posts = () => {
   
                 {post.Image && post.Image[0] && (
                   <img
-                    src={`http://localhost:1337${post.Image[0].formats?.medium?.url || post.Image[0].url}`}
+                    src={`http://localhost:1337${post.Image[0].formats?.large?.url || post.Image[0].url}`}
                     alt="cover"
                     className="post-image"
                   />
                 )}
                 <div className="post-footer">
-                  <span><i className="bi bi-arrow-up"></i> 457</span>
+                  <span><i className="bi bi-hand-thumbs-up"></i> 457</span>
+                  <span><i className="bi bi-hand-thumbs-down"></i> 220</span>
                   <span><i className="bi bi-chat"></i> 68</span>
                   <span><i className="bi bi-share"></i> Partager</span>
                 </div>

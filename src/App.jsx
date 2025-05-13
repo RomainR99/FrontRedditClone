@@ -8,6 +8,8 @@ import Main from './pages/Main';
 import CreatePost from './pages/CreatePost';
 import CategoryPosts from './pages/CategoryPosts';
 import ArticleDetails from "./pages/ArticleDetail";
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
 
 
 
