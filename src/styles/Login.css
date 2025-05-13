@@ -2,18 +2,18 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background-color: #f0f2f5;
-}
-
-.connexion-page {
+    background-color: #0f0f0f;
+  }
+  
+  .connexion-page {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.connexion-form {
-    background-color: white;
+  }
+  
+  .connexion-form {
+    background-color: #1e1e1e;
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
@@ -21,48 +21,85 @@ body {
     display: flex;
     flex-direction: column;
     gap: 15px;
-}
-
-.connexion-form h2 {
+    box-sizing: border-box;
+  }
+  
+  .connexion-form h2 {
     text-align: center;
     font-size: 24px;
-    color: #1c1e21;
+    color: white;
     margin-bottom: 20px;
-}
-
-input {
+  }
+  
+  
+  
+  input {
+    width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 14px;
     background-color: #f5f6f7;
-}
-
-input:focus {
+    box-sizing: border-box;
+  }
+  
+  input:focus {
     border-color: #1877f2;
     outline: none;
-}
-
-button {
+  }
+  
+  button {
     padding: 10px;
-    background-color: #1877f2; /* Orange Reddit */
+    background-color: #1877f2;
     color: white;
     border: none;
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-button:hover {
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  button:hover {
     background-color: #166fe5;
     transform: scale(1.03);
-}
-
-.error-message {
+  }
+  
+  .error-message {
     background-color: #ffe5e5;
     color: #cc0000;
     padding: 10px;
     border-radius: 5px;
     font-size: 14px;
-}
+    text-align: center;
+  }
+  
+  .first-login-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .first-login-button {
+    background-color: transparent;
+    color: rgb(200, 200, 200);
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 5px;
+    transition: color 0.3s;
+  }
+  
+  .first-login-button:hover {
+    color: white;
+  }
+  .connexion-form div {
+    margin-bottom: 10px; 
+  }
+  
+  button {
+    margin-top: 10px; 
+  }
+  
+  
+  

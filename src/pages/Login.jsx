@@ -58,20 +58,20 @@ const Login = () => {
 
         <form onSubmit={handleSubmit} className="form-content">
           <div>
-            <label>Email:</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email"
               required
             />
           </div>
           <div>
-            <label>Mot de passe:</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              placeholder="Mot de passe"
               required
             />
           </div>
@@ -81,13 +81,14 @@ const Login = () => {
           </button>
         </form>
 
+
         {/* Bouton FirstLogin plus petit et en bas */}
         <div className="first-login-container">
           <button
             onClick={handleRedirectToFirstLogin}
             className="first-login-button"
           >
-            FirstLogin
+            Première connexion
           </button>
         </div>
       </div>
