@@ -1,13 +1,21 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../PostCard.css";
+import { comment } from "postcss";
 
-function PostCard({ title, content, image, onDelete }) {
+function PostCard({ postId, title, content, image, onDelete }) {
     const [likes, setLikes] = useState(0);
     const [dislikes, setDislikes] = useState(0);
-    const [comments, setComments] = useState(0);
+    const [comments, setComments] = useState([]);
     const [shared, setShared] = useState(false);
     const [showCommentInput, setShowCommentInput] = useState(false);
     const [newComment, setNewComment] = useState('');
+
+    const navigate = useNavigate();
+
+    const handleSeeComments = () => {
+      navigate(`/comment/${postId}`)
+    }
 
     const handleLike = () => setLikes((prev) => prev + 1)
     const handleDislike = () => setDislikes((prev) => prev + 1)
@@ -27,7 +35,7 @@ function PostCard({ title, content, image, onDelete }) {
     const handleCommentSubmit = (e) => {
       e.preventDefault()
       if (newComment.trim()) {
-        setComments((prev) => prev + 1)
+        setComments((prev) => [...prev, newComment])
         setNewComment('')
         setShowCommentInput(false)
       }
@@ -66,6 +74,14 @@ function PostCard({ title, content, image, onDelete }) {
               <span onClick={tooggleCommentInput} style={{ cursor: 'pointer' }}>
                 <i className="bi bi-chat"></i> {comments.length}
               </span>
+              {comments.slice(-2).map((comment, i) => (
+                <p key={i}  className="post-comment" style={{ cursor: 'pointer' }}><i className="pi pi-chat"></i>{comment}</p>
+              ))}
+              {comments.length > 2 && (
+                <p className="see-more" onClick={handleSeeComments} style={{ cursor: 'pointer' }}>
+                  Voir tous les commentaires ({comments.length})
+                </p>
+              )}
               &nbsp;
               <span onClick={handleShare} style={{ cursor: 'pointer' }}>
                 <i className="bi bi-share"></i> {shared ? "Lien copié!" : "Partager"}

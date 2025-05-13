@@ -77,6 +77,12 @@
     margin-right: 6px;
 }
 
+.post-footer span:hover {
+    color: #60a5fa;
+    transform: scale(1.05);
+    transition: all 0.2s ease-in-out;
+}
+
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -143,4 +149,25 @@
 .comment-list li {
     padding: 6px 0;
     border-bottom: 1px solid #333;
+}
+
+.post-comment {
+    font-size: 14px;
+    color: #ccc;
+    margin: 5px 0 0 0;
+    padding-left: 10px;
+    border-left: 2px solid #3b82f6;
+}
+
+.see-more {
+    font-size: 13px;
+    margin-top: 5px;
+    padding-left: 10px;
+    color: #60a5fa;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.see-more:hover {
+    color: #3b82f6;
 }

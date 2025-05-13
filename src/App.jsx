@@ -6,6 +6,7 @@ import "./index.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Connexion from './components/Connexion.jsx';
 import Inscription from './components/Inscription.jsx';
+import CommentPage from './components/CommentPage.jsx';
 
 
 
@@ -17,6 +18,7 @@ function App() {
         <Route path="/profile/:username" element={<Profile/>}/>
         <Route path='/connexion' element={<Connexion/>}/>
         <Route path='/inscription' element={<Inscription/>}/>
+        <Route path='/comment/:postId' element={<CommentPage />}/>
       </Routes>
     </BrowserRouter>
   )

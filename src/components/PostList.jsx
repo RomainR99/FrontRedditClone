@@ -13,6 +13,7 @@ function PostList() {
                 posts.map((post, index) => (
                     <PostCard 
                         key={index} 
+                        postId={index}
                         title={post.title} 
                         content={post.content} 
                         image={post.image}
