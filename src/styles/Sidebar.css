@@ -1,3 +1,4 @@
+/* Style de la sidebar */
 .sidebar {
     width: 250px;
     background-color: #1a1a1a;
@@ -5,7 +6,8 @@
     padding: 20px;
     border-radius: 10px;
 }
-  
+
+/* Titre de la section */
 .section-title {
     font-size: 12px;
     color: #888;
@@ -13,7 +15,8 @@
     text-transform: uppercase;
     letter-spacing: 1px;
 }
-  
+
+/* Style des catégories */
 .category {
     display: flex;
     align-items: center;
@@ -22,9 +25,8 @@
     cursor: pointer;
     padding: 8px 0;
     font-weight: 500;
-    transition: background 0.2s;
 }
-  
+
 .category:hover {
     color: #4ea1f3;
 }
@@ -37,21 +39,34 @@
     font-size: 12px;
     color: #aaa;
 }
-  
+
+/* Sous-catégories */
 .subcategory {
     list-style: none;
     padding-left: 30px;
     margin-bottom: 10px;
 }
-  
+
 .subcategory li {
     font-size: 14px;
     padding: 6px 0;
     color: #ccc;
     cursor: pointer;
 }
-  
+
+/* Couleur des sous-catégories au survol */
 .subcategory li:hover {
+    color: #4ea1f3; /* Bleu clair */
     text-decoration: underline;
 }
-  
+
+/* Liens des sous-catégories (si tu veux qu'ils aient un style spécifique) */
+.subcategory-link {
+    color: #ccc;
+    text-decoration: none;
+    display: block;
+}
+
+.subcategory-link:hover {
+    color: #4ea1f3; /* Bleu clair */
+}

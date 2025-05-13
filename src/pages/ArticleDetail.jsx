@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Comment from "../components/Comment";
+import "../styles/ArticleDetail.css"
 
 const formatDate = (dateStr) => {
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -93,11 +94,13 @@ const ArticleDetails = () => {
       <p className="text-sm text-gray-500">{formatDate(publishedAt)}</p>
 
       {article.Image && article.Image[0] && (
+        <div className="image-container">
         <img
           src={`http://localhost:1337${article.Image[0].formats?.large?.url || article.Image[0].url}`}
           alt="cover"
           className="w-full h-48 object-cover rounded mt-2"
         />
+        </div>
       )}
 
 
