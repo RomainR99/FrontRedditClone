@@ -137,7 +137,7 @@ const ArticleDetails = () => {
           </div>
         </div>
   
-      <Footer /> 
+      <Footer /> {/* Footer en bas */}
     </div>
   );
 };

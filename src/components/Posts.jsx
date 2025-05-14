@@ -73,6 +73,14 @@ const Posts = () => {
 
       if (!res.ok) throw new Error("Erreur lors de la suppression de l'article.");
 
+      //Récupere le message d"erreur dans du back
+      //if (!res.ok) {
+      //const errorData = await res.json();
+      // Récupère le message Strapi ou un fallback
+      //const errorMessage = errorData?.error?.message || "Erreur lors de la suppression de l'article.";
+      //throw new Error(errorMessage);
+    //}
+
       setPosts((prev) => prev.filter((post) => post.id !== id));
     } catch (err) {
       alert(`Erreur : ${err.message}`);
@@ -105,11 +113,11 @@ const Posts = () => {
             <div
               key={post.id}
               className="post-card-item"
-            >
+              disabled={post.user?.id !== currentUserId}>
               {/* Supprimer */}
               <button
                 onClick={() => handleDelete(post.id)}
-                disabled={post.user?.id !== currentUserId}
+               
                 className={`absolute top-2 right-2 px-2 py-1 rounded text-red-500 border-2 border-red-500 hover:bg-red-500 hover:text-white flex items-center gap-1 ${
                   post.user?.id === currentUserId
                     ? "cursor-pointer"

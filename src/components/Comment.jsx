@@ -29,7 +29,7 @@ const Comment = ({ postId }) => {
   const [comments, setComments] = useState([]); // État pour stocker les commentaires du post
 
   const handleCommentSubmit = async (e) => {
-    //e.preventDefault();
+    e.preventDefault();
     if (!commentText.trim()) return;
 
     const token = localStorage.getItem("jwt");
@@ -93,7 +93,7 @@ const Comment = ({ postId }) => {
         <textarea
           value={commentText}
           onChange={(e) => setCommentText(e.target.value)}
-          placeholder="Écrivez un commentaire...Pour accéder au commentaire"
+          placeholder="Écrivez un commentaire..."
           className="w-full p-2 border rounded"
           rows={3}
         ></textarea>
@@ -123,7 +123,6 @@ const Comment = ({ postId }) => {
 };
 
 export default Comment;
-
 
 
 
