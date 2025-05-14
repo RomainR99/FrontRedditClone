@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { usePosts } from "./PostContext.jsx";
+import { useComments } from "./CommentContext.jsx";
 import Navbar from "./Navbar.jsx";
 import "../CommentPage.css";
 
@@ -7,6 +8,8 @@ import "../CommentPage.css";
 function CommentPage() {
     const {postId} = useParams();
     const { posts } = usePosts();
+    const { comments } = useComments();
+    
 
     const post = posts[postId];
 
@@ -14,6 +17,8 @@ function CommentPage() {
         return <p>Post not found</p>;
     }
 
+    const postComments = comments.filter(c => c.postId === Number(postId))
+    
     return (
         <>
             <Navbar/>
@@ -24,11 +29,11 @@ function CommentPage() {
 
                 <h3>Commentaires: </h3>
                 <ul>
-                    {!post?.comments || post.comments.length === 0 ? (
+                    {postComments.length === 0 ? (
                         <li>Aucun commentaire pour ce post.</li>
                     ) : (
-                        post.comments.map((comment, index) => (
-                            <li key={index}>{comment}</li>
+                        postComments.map((comment, index) => (
+                            <li key={index}>{comment.text}</li>
                         ))
                     )}
                 </ul>

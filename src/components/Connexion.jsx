@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "../Connexion.css";
-import Navbar from "./Navbar";
+
 
 function Connexion() {
     const [email, setEmail] = useState('')
@@ -25,7 +25,7 @@ function Connexion() {
 
     return (
         <>
-            <Navbar/>
+            
             <div className="connexion-page">
                 <form onSubmit={handleConnexion} className="connexion-form">
                     <h2 >Se connecter</h2>
