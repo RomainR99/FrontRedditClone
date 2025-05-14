@@ -22,9 +22,9 @@ function PostCard({ postId, title, content, image, onDelete }) {
     const handleLike = () => setLikes((prev) => prev + 1)
     const handleDislike = () => setDislikes((prev) => prev + 1)
     const handleShare = async () => {
-      const postText = `${title}\n\n${content}\n\n${image ? image : ''}`
+      const postText = `${title}\n\n${content}\n\n${image ? image : ''}` // Crée une chaîne de texte à partager
       try {
-        await navigator.clipboard.writeText(postText)
+        await navigator.clipboard.writeText(postText) // Copie le texte dans le presse-papiers
         setShared(true)
         setTimeout(() => setShared(false), 2000);
       } catch (err) {
