@@ -29,7 +29,7 @@ const Comment = ({ postId }) => {
   const [comments, setComments] = useState([]); // État pour stocker les commentaires du post
 
   const handleCommentSubmit = async (e) => {
-    e.preventDefault();
+    //e.preventDefault();
     if (!commentText.trim()) return;
 
     const token = localStorage.getItem("jwt");

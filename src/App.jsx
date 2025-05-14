@@ -13,6 +13,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 
 
 
+
 function App() {
   return (
     <Router>
@@ -25,6 +26,7 @@ function App() {
         <Route path="/createPost" element={<CreatePost />} />
         <Route path="/categorie/:nom" element={<CategoryPosts />} />
         <Route path="/article/:id" element={<ArticleDetails />} />
+       
 
         
       </Routes>
