@@ -4,7 +4,7 @@ import '../Suggestion.css';
 function Suggestion() {
     const [joinedCommunities, setJoinedCommunities] = useState([]);
 
-    const communities = ["devweb", "reactjs", "anime"];
+    const communities = ["devweb", "reactjs", "anime", "foot", "cinema", "musique", "voyage", "cuisine", "photographie", "fitness"];
 
 
     // includes: vérifie si l'élément est présent dans le tableau
