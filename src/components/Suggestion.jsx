@@ -6,11 +6,15 @@ function Suggestion() {
 
     const communities = ["devweb", "reactjs", "anime"];
 
+
+    // includes: vérifie si l'élément est présent dans le tableau
     const handleJoin = (community) => {
         if (!joinedCommunities.includes(community)) {
             setJoinedCommunities([...joinedCommunities, community])
         }
     }
+
+    
     return(
         <>
             <aside className="suggestions">
@@ -18,9 +22,9 @@ function Suggestion() {
                 <ul>
                   {communities.map((community) => (
                     <li key={community}>
-                        r/{community}{" "}
+                        r/{community}{" "} 
                         <button onClick={() => handleJoin(community)} disabled={joinedCommunities.includes(community)}>
-                            {joinedCommunities.includes(community) ? "Rejoint" : "Rejoindre"}
+                            {joinedCommunities.includes(community) ? "Rejoint" : "Rejoindre"} 
                         </button>
                     </li>
                   ))}
