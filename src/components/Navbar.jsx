@@ -6,10 +6,14 @@ import CreatePost from "./CreatePost.jsx";
 import Main from "./Main.jsx";
 
 function Navbar() {
-    const [showCreate, setShowCreate] = useState(false);
-    const [searchQuery, setSearchQuery] = useState("");
+    // Gère l'affichage du formulaire de création de post
+    const [showCreate, setShowCreate] = useState(false); 
+    
+    // Gère le texte de recherche entré par l'utilisateur
+    const [searchQuery, setSearchQuery] = useState(""); 
     const navigate = useNavigate();
 
+    // Déclenche la recherche en redirigeant vers l'URL avec le paramètre ?search=
     function handleSearch() {
         if (searchQuery.trim()) {
             navigate(`/?search=${encodeURIComponent(searchQuery.trim())}`)

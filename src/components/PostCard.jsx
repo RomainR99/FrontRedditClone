@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../PostCard.css";
-import { comment } from "postcss";
+
 
 function PostCard({ postId, title, content, image, onDelete }) {
     const [likes, setLikes] = useState(0);
@@ -11,8 +11,10 @@ function PostCard({ postId, title, content, image, onDelete }) {
     const [showCommentInput, setShowCommentInput] = useState(false);
     const [newComment, setNewComment] = useState('');
 
+    // useNavigate: Hook 
     const navigate = useNavigate();
 
+    // Handle: gérer un événement
     const handleSeeComments = () => {
       navigate(`/comment/${postId}`)
     }
@@ -31,6 +33,7 @@ function PostCard({ postId, title, content, image, onDelete }) {
       }
     }
 
+    // Toggle: basculer entre deux états
     const tooggleCommentInput = () => setShowCommentInput(!showCommentInput)
     const handleCommentSubmit = (e) => {
       e.preventDefault()
