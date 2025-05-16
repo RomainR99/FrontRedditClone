@@ -17,9 +17,14 @@ function CreatePost() {
   
 
   // Charger les catégories depuis Strapi
-  const enumCategories = ["categorie",
-    "categorieb",
-    "categoriec",];
+  const enumCategories = [
+    'Memes', 'Buzz', 'Animaux', 'Humour', 'Satisfaisant',
+    'Action', 'Aventure', 'E-sports', 'Mobile', 'Rôle', 'Stratégie',
+    'Question/Réponse', 'Histoire/Confessions',
+    'Machine Learning', 'Informatique', 'Programmation', 'Intelligence Artificielle', 'Logiciel/Application', 'Eléctronique DIY',
+    'Célébrités', 'Artistes/Influenceurs', 'Podcasts', 'Streamers',
+    'Films', 'Séries', 'Documentaires', 'Critiques', 'Bandes Annonces'
+  ];
 
 
   // Nettoyage de l'aperçu d'image
