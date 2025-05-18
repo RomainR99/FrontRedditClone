@@ -12,63 +12,42 @@ function CreatePost() {
   const [preview, setPreview] = useState(null);
   const [error, setError] = useState(null);
   const [categoryId, setCategoryId] = useState("");
+  const [hashtagInput, setHashtagInput] = useState('');
   const navigate = useNavigate();
 
-  
-
-  // Charger les catégories depuis Strapi
   const enumCategories = [
-    'Memes', 'Buzz', 'Animaux', 'Humour', 'Satisfaisant',
-    'Action', 'Aventure', 'E-sports', 'Mobile', 'Rôle', 'Stratégie',
-    'Question/Réponse', 'Histoire/Confessions',
-    'Machine Learning', 'Informatique', 'Programmation', 'Intelligence Artificielle', 'Logiciel/Application', 'Eléctronique DIY',
-    'Célébrités', 'Artistes/Influenceurs', 'Podcasts', 'Streamers',
-    'Films', 'Séries', 'Documentaires', 'Critiques', 'Bandes Annonces'
+    "Memes", "Buzz", "Animaux", "Humour", "Satisfaisant",
+    "Action", "Aventure", "E-sports", "Mobile", "Rôle", "Stratégie",
+    "Question/Réponse", "Histoire/Confessions",
+    "Machine Learning", "Informatique", "Programmation", "Intelligence Artificielle", "Logiciel/Application", "Eléctronique DIY",
+    "Célébrités", "Artistes/Influenceurs", "Podcasts", "Streamers",
+    "Films", "Séries", "Documentaires", "Critiques", "Bandes Annonces"
   ];
 
-
-  // Nettoyage de l'aperçu d'image
   useEffect(() => {
     if (!cover) {
       setPreview(null);
       return;
     }
-
     const objectUrl = URL.createObjectURL(cover);
     setPreview(objectUrl);
-
     return () => URL.revokeObjectURL(objectUrl);
   }, [cover]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem('jwt');
-
-    if (!token) {
-      setError("Vous devez être connecté pour créer un post.");
-      return;
-    }
-
-    if (!cover) {
-      setError("Veuillez sélectionner une image au format PNG ou JPEG.");
-      return;
-    }
-
-    if (!categoryId) {
-      setError("Veuillez sélectionner une catégorie.");
-      return;
-    }
+    if (!token) return setError("Vous devez être connecté pour créer un post.");
+    if (!cover) return setError("Veuillez sélectionner une image PNG ou JPEG.");
+    if (!categoryId) return setError("Veuillez sélectionner une catégorie.");
 
     try {
-      // Étape 1 : upload image
+      // Upload image
       const formImage = new FormData();
       formImage.append("files", cover);
-
       const uploadRes = await fetch("http://localhost:1337/api/upload", {
         method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
         body: formImage,
       });
 
@@ -76,8 +55,38 @@ function CreatePost() {
       const imageData = await uploadRes.json();
       const imageId = imageData[0].id;
 
-      // Étape 2 : créer article
-      const res = await fetch("http://localhost:1337/api/articles", {
+      // Hashtag processing
+      let hashtagIds = [];
+      const rawTags = hashtagInput
+        .split(',')
+        .map(tag => tag.trim().replace(/^#/, ''))
+        .filter(tag => tag.length > 0);
+
+      for (const tag of rawTags) {
+        const check = await fetch(`http://localhost:1337/api/hashtags?filters[Hashtag][$eq]=#${tag}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const checkData = await check.json();
+        if (checkData.data.length > 0) {
+          hashtagIds.push(checkData.data[0].id);
+        } else {
+          const create = await fetch("http://localhost:1337/api/hashtags", {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              data: { Hashtag: `#${tag}` },
+            }),
+          });
+          const created = await create.json();
+          hashtagIds.push(created.data.id);
+        }
+      }
+
+      // Créer l'article
+      const postRes = await fetch("http://localhost:1337/api/articles", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -87,13 +96,14 @@ function CreatePost() {
           data: {
             Title: title,
             Description: description,
-            Image: imageId,
-            Categorie: categoryId, // <- bon nom de champ
+            Image: [imageId], // Strapi attend un tableau ici
+            Categorie: categoryId,
+            hashtags: hashtagIds,
           },
         }),
       });
 
-      if (!res.ok) throw new Error(`Erreur HTTP : ${res.status}`);
+      if (!postRes.ok) throw new Error(`Erreur HTTP : ${postRes.status}`);
       navigate("/posts");
 
     } catch (err) {
@@ -109,7 +119,6 @@ function CreatePost() {
         <div className="center-layout">
           <div className="max-w-xl mx-auto bg-white shadow rounded p-6">
             <h1 className="text-2xl font-bold mb-4">Créer un post</h1>
-
             {error && <p className="text-red-500 mb-4">{error}</p>}
 
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -137,20 +146,28 @@ function CreatePost() {
               <label className="block">
                 <span className="text-gray-700">Catégorie</span>
                 <select
-                  value={categoryId || ""}
+                  value={categoryId}
                   onChange={(e) => setCategoryId(e.target.value)}
                   className="w-full border px-3 py-2 rounded"
                   required
                 >
                   <option value="">-- Sélectionner une catégorie --</option>
                   {enumCategories.map((cat) => (
-                    <option key={cat} value={cat}>
-                      {cat}
-                    </option>
+                    <option key={cat} value={cat}>{cat}</option>
                   ))}
                 </select>
               </label>
 
+              <label className="block">
+                <span className="text-gray-700">Hashtags (séparés par des virgules)</span>
+                <input
+                  type="text"
+                  value={hashtagInput}
+                  onChange={(e) => setHashtagInput(e.target.value)}
+                  className="w-full border px-3 py-2 rounded"
+                  placeholder="#tech, #fun, #AI"
+                />
+              </label>
 
               <label className="block">
                 <span className="text-gray-700">Image (PNG ou JPEG)</span>
@@ -174,18 +191,11 @@ function CreatePost() {
               {preview && (
                 <div className="mt-4">
                   <p className="text-sm text-gray-500 mb-2">Aperçu de l'image :</p>
-                  <img
-                    src={preview}
-                    alt="aperçu"
-                    className="w-full max-w-xs rounded shadow"
-                  />
+                  <img src={preview} alt="aperçu" className="w-full max-w-xs rounded shadow" />
                 </div>
               )}
 
-              <button
-                type="submit"
-                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
-              >
+              <button type="submit" className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">
                 Publier
               </button>
             </form>
@@ -198,6 +208,7 @@ function CreatePost() {
 }
 
 export default CreatePost;
+
 
 
 

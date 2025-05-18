@@ -9,6 +9,8 @@ import CreatePost from './pages/CreatePost';
 import CategoryPosts from './pages/CategoryPosts';
 import ArticleDetails from "./pages/ArticleDetail";
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import HashtagPosts from './pages/HashtagPosts';
+import HashtagList from './components/HashtagList';
 
 
 
@@ -26,7 +28,8 @@ function App() {
         <Route path="/createPost" element={<CreatePost />} />
         <Route path="/categorie/:nom" element={<CategoryPosts />} />
         <Route path="/article/:id" element={<ArticleDetails />} />
-       
+        <Route path="/hashtags" element={<HashtagList />} />
+        <Route path="/hashtag/:id" element={<HashtagPosts />} />
 
         
       </Routes>

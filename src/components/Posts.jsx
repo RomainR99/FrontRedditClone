@@ -2,9 +2,6 @@ import React, { useState, useEffect } from 'react';
 import "../styles/Post.css";
 import { Link } from "react-router-dom";
 
-
-
-
 const getCurrentUserId = () => {
   const token = localStorage.getItem("jwt");
   if (!token) return null;
@@ -150,7 +147,19 @@ const Posts = () => {
                   <span><i className="bi bi-chat"></i> 68</span>
                   <span><i className="bi bi-share"></i> Partager</span>
                 </div>
+                {post?.hashtags?.length > 0 && (
+                <p className="hashtags">
+                  <strong>Hashtags :</strong>{" "}
+                  {post?.hashtags.map(h => (
+                    <span key={h.id} className="hashtag">
+                      #{h.Hashtag}
+                    </span>
+                  ))}
+                </p>
+              )}
               </Link>
+              {/* Affichage de l'article via le composant Article */}
+            
             </div>
           ))
         ) : (

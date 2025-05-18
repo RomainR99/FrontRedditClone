@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Navbar from "../components/Navbar.jsx";
 import Sidebard from "../components/Sidebar.jsx";
 import "../styles/MainPage.css";
-import Suggestion from "../components/Suggestion.jsx";
+import Suggestion from "../components/HashtagList.jsx";
 import Footer from "../components/Footer.jsx";
 import Posts from "../components/Posts.jsx";
 
