@@ -55,33 +55,48 @@ function CreatePost() {
       const imageData = await uploadRes.json();
       const imageId = imageData[0].id;
 
-      // Hashtag processing
+      // Hashtag processing (en minuscules et sans doublon)
       let hashtagIds = [];
       const rawTags = hashtagInput
         .split(',')
-        .map(tag => tag.trim().replace(/^#/, ''))
+        .map(tag => tag.trim().toLowerCase().replace(/^#/, ''))
         .filter(tag => tag.length > 0);
 
       for (const tag of rawTags) {
-        const check = await fetch(`http://localhost:1337/api/hashtags?filters[Hashtag][$eq]=#${tag}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        const checkData = await check.json();
-        if (checkData.data.length > 0) {
-          hashtagIds.push(checkData.data[0].id);
-        } else {
-          const create = await fetch("http://localhost:1337/api/hashtags", {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              data: { Hashtag: `#${tag}` },
-            }),
-          });
-          const created = await create.json();
-          hashtagIds.push(created.data.id);
+        try {
+          const check = await fetch(
+            `http://localhost:1337/api/hashtags?filters[Hashtag][$eq]=${encodeURIComponent(`#${tag}`)}`,
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
+          const checkData = await check.json();
+
+          if (checkData.data && checkData.data.length > 0) {
+            hashtagIds.push(checkData.data[0].id);
+          } else {
+            const create = await fetch("http://localhost:1337/api/hashtags", {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                data: { Hashtag: `#${tag}` },
+              }),
+            });
+
+            const created = await create.json();
+            if (created.data && created.data.id) {
+              hashtagIds.push(created.data.id);
+            } else {
+              throw new Error(`Erreur lors de la création du hashtag : #${tag}`);
+            }
+          }
+        } catch (error) {
+          console.error("Erreur hashtag :", error);
+          setError(`Problème avec le hashtag : #${tag}`);
+          return;
         }
       }
 
@@ -96,7 +111,7 @@ function CreatePost() {
           data: {
             Title: title,
             Description: description,
-            Image: [imageId], // Strapi attend un tableau ici
+            Image: [imageId],
             Categorie: categoryId,
             hashtags: hashtagIds,
           },
@@ -165,7 +180,7 @@ function CreatePost() {
                   value={hashtagInput}
                   onChange={(e) => setHashtagInput(e.target.value)}
                   className="w-full border px-3 py-2 rounded"
-                  placeholder="#tech, #fun, #AI"
+                  placeholder="#tech, #fun, #ai"
                 />
               </label>
 
