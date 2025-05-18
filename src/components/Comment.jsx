@@ -4,8 +4,8 @@ const getCurrentUserId = () => {
   const token = localStorage.getItem("jwt");
   if (!token) return null;
   try {
-    const payload = JSON.parse(atob(token.split('.')[1])); // Décodage du JWT
-    return payload.id; // Retourne l'ID de l'utilisateur contenu dans le JWT
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload.id;
   } catch (error) {
     console.error("Erreur lors du décodage du token :", error);
     return null;
@@ -15,71 +15,99 @@ const getCurrentUserId = () => {
 const getUsername = async (userId) => {
   const token = localStorage.getItem("jwt");
   const res = await fetch(`http://localhost:1337/api/users/${userId}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    headers: { Authorization: `Bearer ${token}` },
   });
-
   const data = await res.json();
-  return data.username; // Retourne le nom d'utilisateur
+  return data.username;
+};
+
+// Fonction pour extraire les hashtags, uniques et en minuscules
+const extractHashtags = (text) => {
+  const matches = text.match(/#\w+/g);
+  if (!matches) return [];
+  return [...new Set(matches.map(tag => tag.toLowerCase()))];
 };
 
 const Comment = ({ postId }) => {
   const [commentText, setCommentText] = useState("");
-  const [comments, setComments] = useState([]); // État pour stocker les commentaires du post
+  const [comments, setComments] = useState([]);
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
     if (!commentText.trim()) return;
 
     const token = localStorage.getItem("jwt");
-    const userId = getCurrentUserId(); // Extrait l'ID de l'utilisateur du JWT
-
+    const userId = getCurrentUserId();
     if (!token || !userId) {
       alert("Vous devez être connecté pour commenter.");
       return;
     }
 
-    const username = await getUsername(userId); // Récupère le username de l'utilisateur
-
-    const commentData = {
-      data: {
-        Content: `${commentText} - Posté par: ${username}`, // Ajouter le username à la fin du commentaire
-        article: postId, // L'article auquel ce commentaire est lié
-      }
-    };
-
     try {
+      const username = await getUsername(userId);
+
+      const hashtags = extractHashtags(commentText);
+      const hashtagIds = [];
+
+      for (const tag of hashtags) {
+        const response = await fetch(
+          `http://localhost:1337/api/hashtags?filters[Hashtag][$eq]=${encodeURIComponent(tag)}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        const data = await response.json();
+
+        if (data.data.length > 0) {
+          hashtagIds.push(data.data[0].id);
+        } else {
+          const create = await fetch("http://localhost:1337/api/hashtags", {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              data: { Hashtag: tag },
+            }),
+          });
+          const created = await create.json();
+          if (created.data && created.data.id) {
+            hashtagIds.push(created.data.id);
+          }
+        }
+      }
+
+      // ✅ Création du commentaire avec association propre aux hashtags
+      const commentData = {
+        data: {
+          Content: `${commentText} - Posté par: ${username}`,
+          article: postId,
+          ...(hashtagIds.length > 0 ? { hashtags: hashtagIds.map(id => ({ id })) } : {}),
+        }
+      };
+
+      // 🐛 Affiche les données envoyées pour debug
+      console.log("Comment envoyé :", JSON.stringify(commentData, null, 2));
+
       const res = await fetch("http://localhost:1337/api/comments", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // En-tête avec le token
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(commentData),
       });
 
       const result = await res.json();
+      if (!res.ok) throw new Error(result.error?.message || "Erreur serveur");
 
-      if (!res.ok) {
-        console.error("Erreur API complète :", JSON.stringify(result, null, 2));
-        throw new Error(result.error?.message || "Erreur serveur");
-      }
+      setCommentText("");
 
-      console.log("Commentaire ajouté :", result.data);
-      setCommentText(""); // Réinitialise le champ de texte
-
-      // Récupérer à nouveau les commentaires après l'ajout
+      // Rechargement des commentaires
       const commentsRes = await fetch(`http://localhost:1337/api/comments?filters[article]=${postId}`);
       const commentsData = await commentsRes.json();
-
-      if (!commentsRes.ok) {
-        console.error("Erreur lors de la récupération des commentaires :", commentsData);
-        throw new Error("Erreur lors de la récupération des commentaires");
-      }
-
-      // Mettre à jour l'état des commentaires pour les afficher
-      setComments(commentsData.data); 
+      setComments(commentsData.data);
 
     } catch (err) {
       console.error("Erreur lors de l'envoi du commentaire :", err.message);
@@ -105,7 +133,6 @@ const Comment = ({ postId }) => {
         </button>
       </form>
 
-      {/* Affichage des commentaires associés au post */}
       <div className="comments-section mt-6">
         <h3 className="text-xl font-semibold">Commentaires :</h3>
         {comments.length === 0 ? (
@@ -113,7 +140,7 @@ const Comment = ({ postId }) => {
         ) : (
           comments.map((comment) => (
             <div key={comment.id} className="comment mt-4 p-2 border rounded">
-              <p>{comment.Content}</p> {/* Affiche le commentaire */}
+              <p>{comment.Content}</p>
             </div>
           ))
         )}
@@ -121,6 +148,7 @@ const Comment = ({ postId }) => {
     </div>
   );
 };
+
 
 export default Comment;
 
